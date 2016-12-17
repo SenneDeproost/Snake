@@ -1,9 +1,15 @@
+/****************************************************************
+ *                          MINESWEEPER                         *
+ *                      By Senne Deproost                       *
+ *        senne.deproost@vub.be - sennedeproost@hotmail.com     *
+ ****************************************************************/
+
 #include <stdlib.h>
 #include <time.h>
 
 #include "game.h"
 #include "grid.h"
-#include "GUI.h" // DEBUG
+#include "GUI.h"
 #include "main.h"
 
 
@@ -24,7 +30,7 @@ int main(int argc, char *argv[]) { // Volgorde van de argumenten: W, H, nr of mi
 	 */
 	srand(time(NULL));
 
-	
+
 // http://stackoverflow.com/questions/12585398/how-to-pass-arguments-from-terminal-to-a-function
 	WIDTH = atoi(argv[1]);
 	HEIGHT = atoi(argv[2]);

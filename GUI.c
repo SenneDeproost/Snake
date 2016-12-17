@@ -142,6 +142,10 @@ void read_GUI_input() {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
+			deallocate_grid(WIDTH, HEIGHT);
+			dead = 1; // Een spel die de speler niet heeft gewonnen wordt ook gezien als dead = 1.
+			update_stats();
+			show_stats();
 			exit(0);
 
 		case SDL_KEYDOWN:

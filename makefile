@@ -1,13 +1,13 @@
 OBJ=game.o grid.o main.o printer.o GUI.o
 HEADERS=game.h grid.h printer.h GUI.h main.h
 CC=gcc
-TARGET=main
+TARGET=minesweeper
 
 # MAKEFILE #s
 
 all: $(OBJ)
 	@echo “Linking all object files”
-	$(CC) $(OBJ) liballoc_grid.a -lSDL -o $(TARGET)
+	$(CC) $(OBJ) -lSDL -o $(TARGET)
 
 game.o: game.c $(HEADERS)
 	@echo “Compiling game.c”

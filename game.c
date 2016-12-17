@@ -2,6 +2,7 @@
   #include "game.h"
   #include "main.h"
   #include "GUI.h"
+  #include "grid.h"
 
 /****************************************************************************************************
  *				          			     	  		TE IMPLEMENTEREN FUNCTIES:			                 			  			*
@@ -37,9 +38,16 @@ if (get_cell(x, y)->state == FLAGGED) { // Is vakje gevlagd?
     }
 
     if (nr_of_flagged_mines == NR_OF_MINES){
-      printf("YOU WON!\n");
+      printf("/+/+/+/ YOU WON! /+/+/+/\n");
+      printf("\n");
+      print_grid();
+      draw_grid();
+      printf("Spel wordt afgesloten...\n");
+
       update_stats();
       show_stats();
+      sleep(2);
+      deallocate_grid(WIDTH, HEIGHT);
       exit(0); // Programma wordt afgesloten met code 0 = succes.
     }
 
@@ -61,13 +69,19 @@ void reveal_coordinate(int x, int y) {
 /* Als een cel een mijn bevat, dan is de speler dood*/
 if (get_cell(x, y)->is_mine == 1 )
 {
-    printf("MINE EXPLODED\n");
+    printf("/+/+/+/ MINE EXPLODED /+/+/+/ \n");
+    printf("\n");
     dead = 1;
     print_grid();
+    printf("Spel wordt afgesloten...\n");
+
+
     draw_grid();
     update_stats();
-    show_stats(); // MOET ONDERAAN GEPRINT WORDEN !! 2 BE DEBUG
-    //exit(0);
+    show_stats();
+    sleep(2);
+    deallocate_grid(WIDTH, HEIGHT);
+    exit(0);
 }
 
 /* Als de cel geen mijn is, verander dan zijn staat van covered naar uncovered. */
@@ -236,6 +250,7 @@ void handle_input() {
 		break;
   case 'E': // Exit
     update_stats();
+    deallocate_grid(WIDTH, HEIGHT);
     exit(0); // Programma wordt afgesloten met code 0 = succes.
     break;
   case 'B': // Boem! Alle mijnen ontploffen

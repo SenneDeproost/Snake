@@ -32,8 +32,7 @@ struct Cell {
  * De functie neemt twee integers als argument: grid_width stelt de breedte van het veld voor
  * (t.t.z. het max x-coordinaat + 1), grid_height de hoogte (t.t.z. het max y-coordinaat + 1).
  */
-struct Cell ***allocate_grid2(int grid_width, int grid_height);
-
+struct Cell ***allocate_grid(int grid_width, int grid_height);
 
 
 
