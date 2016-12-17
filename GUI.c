@@ -3,6 +3,7 @@
 #include "grid.h"
 #include "game.h"
 #include "settings.h"
+#include "snake.h"
 
 
 /*
@@ -66,19 +67,33 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 
 
 /*
- * Deze functie moet je zelf vervolledigen: je mag alles aan deze functie
- * (inclusief return-type en argumenten) aanpassen, indien nodig.
+ * DRAW GRID
  */
 void draw_grid() {
 
 // Teken de vakjes in de GUI.
 for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window); //DEBUG
 
 	}
 	SDL_Flip(window);
 }
+}
+
+/*
+ * DRAW SNAKE
+ */
+
+void draw_snake() {
+	printf("draw snake \n");
+draw_on_screen(
+	get_part(0)->x * IMAGE_WIDTH,
+	get_part(0)->y * IMAGE_HEIGHT,
+	images[2],
+	window
+);
+
 }
 
 /*
@@ -115,9 +130,32 @@ void read_GUI_input() {
 
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
-			case SDLK_p:
 
-				break;
+      // Besturing met de pijltjestoetsen.
+
+			/* Boven */
+			case SDLK_UP:
+			//get_part(0)->y = get_part(0)->y - 1;
+			printf("up\n");
+			break;
+				/* Onder */
+			case SDLK_DOWN:
+			//get_part(0)->y = get_part(0)->y + 1;
+			printf("down\n");
+			break;
+			/* Links */
+			case SDLK_LEFT:
+			//et_part(0)->x = get_part(0)->x - 1;
+			printf("left\n");
+			//draw_snake();
+			break;
+			/* Rechts */
+			case SDLK_RIGHT:
+			//get_part(0)->x = get_part(0)->x + 1;
+			printf("right\n");
+			//draw_snake();
+			break;
+
 			}
 			break;
 
@@ -195,11 +233,16 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 void initialize_gui(int grid_width, int grid_height) {
 	initialize_window("Snake", grid_width, grid_height);
 	initialize_figures();
-	draw_grid();
-	while (1) {  // 1 = GUI, 0 = TERMINAL
-		read_GUI_input();
-		sleep(0,0001); // Voorkomt dat de CPU te druk bezig is met het programma.
-	}
+	//draw_snake();
+draw_grid();
+	//draw_snake();
+	//while (1) {  // 1 = GUI, 0 = TERMINAL
+		//read_GUI_input();
+		//draw_snake();
+		//sleep(0.1); // Voorkomt dat de CPU te druk bezig is met het programma.
+
+ //}
+
 	atexit(stop_gui);
 }
 

@@ -23,5 +23,7 @@ void initialize_gui(int grid_width, int grid_height);
  */
 void draw_grid(void);
 
+void draw_snake(void);
+
 
 #endif /* GUI_H_ */

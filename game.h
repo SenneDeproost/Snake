@@ -5,5 +5,6 @@
 
 #include "grid.h"
 
+void run_game();
 
 #endif /* GAME_H_ */

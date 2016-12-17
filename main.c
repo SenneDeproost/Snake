@@ -12,6 +12,7 @@
 #include "GUI.h"
 #include "main.h"
 #include "settings.h"
+#include "snake.h"
 
 
 /*
@@ -30,8 +31,7 @@ int main() { // Volgorde van de argumenten: W, H, nr of mines
 	 */
 
 	initialize_grid(GRID_WIDTH, GRID_HEIGHT);
-
-
+  initialize_snake(MAX_SNAKE_LENGTH);
 	initialize_gui(GRID_WIDTH, GRID_HEIGHT);
 
 	run_game();
