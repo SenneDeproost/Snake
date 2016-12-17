@@ -1,7 +1,7 @@
-OBJ=game.o grid.o main.o printer.o GUI.o
-HEADERS=game.h grid.h printer.h GUI.h main.h
+OBJ=game.o grid.o main.o GUI.o
+HEADERS=game.h grid.h GUI.h main.h
 CC=gcc
-TARGET=minesweeper
+TARGET=main
 
 # MAKEFILE #s
 
@@ -20,10 +20,6 @@ grid.o: grid.c $(HEADERS)
 main.o: main.c $(HEADERS)
 	@echo “Compiling main.c”
 	$(CC) main.c -c -o main.o
-
-printer.o: printer.c $(HEADERS)
-	@echo “Compiling printer.c”
-	$(CC) printer.c -c -o printer.o
 
 GUI.o: GUI.c $(HEADERS)
 	@echo “Compiling GUI.c”

@@ -2,7 +2,7 @@
 #include "main.h"
 #include "grid.h"
 #include "game.h"
-
+#include "settings.h"
 
 
 /*
@@ -72,45 +72,13 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 void draw_grid() {
 
 // Teken de vakjes in de GUI.
-for (int i = 0; i <= (WIDTH - 1); i++){
-	for (int j = 0; j <= (HEIGHT - 1); j++){
-		int a;
+for (int i = 0; i <= (GRID_WIDTH - 1); i++){
+	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
 
-		// Wanneer cell uncovered of flagged is, mag het geprint
-
-		if(get_cell(i, j)->state == UNCOVERED){
-		a = get_cell(i, j)->neighbouring_mines;
-		draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[a], window);
-		}
-
-		// Vakje is FLAGGED.
-		else if (get_cell(i, j)->state == FLAGGED){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_HEIGHT, images[9], window);
-		}
-
-
-
-		// Uncovered vakje.
-		else{
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_HEIGHT, images[10], window);
-			}
-
-		// Vakje bevat een mijn en de speler is dood.
-		if((get_cell(i, j)->is_mine == 1) && dead == 1){
-		draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_HEIGHT, images[11], window);
-			}
-		}
 	}
-//SDL_BlitSurface(images[0], NULL, window, NULL);
-
-
-
-	/*
-	 * Onderstaande code moet zeker worden uitgevoerd op het einde van deze functie.
-	 * Wanneer je iets tekent in het venster wordt dit venster nl. niet meteen aangepast.
-	 * Via de SDL_Flip functie wordt het venster correct geupdatet.
-	 */
 	SDL_Flip(window);
+}
 }
 
 /*
@@ -142,17 +110,13 @@ void read_GUI_input() {
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-			deallocate_grid(WIDTH, HEIGHT);
-			dead = 1; // Een spel die de speler niet heeft gewonnen wordt ook gezien als dead = 1.
-			update_stats();
-			show_stats();
+
 			exit(0);
 
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 			case SDLK_p:
-				print_grid();
-				draw_grid();
+
 				break;
 			}
 			break;
@@ -163,18 +127,13 @@ void read_GUI_input() {
 			 * het speelveld waar de speler geklikt heeft bewaard in de variabelen mouse_x en mouse_y.
 			 */
 			SDL_GetMouseState(&mouse_x, &mouse_y);
-			a = (mouse_x / IMAGE_WIDTH);
-			b = (mouse_y/ IMAGE_HEIGHT);
+
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
-				reveal_coordinate(a, b);
-				draw_grid();
-				print_grid();
+
 				break;
 			case SDL_BUTTON_RIGHT:
-				flag_coordinate(a, b);
-				draw_grid();
-				print_grid();
+
 				break;
 			}
 
@@ -202,18 +161,10 @@ void stop_gui() {
  * in een array 'images'.
  */
 void initialize_figures() {
-	images[0] = SDL_LoadBMP("Images/0.bmp");
-	images[1] = SDL_LoadBMP("Images/1.bmp");
-	images[2] = SDL_LoadBMP("Images/2.bmp");
-	images[3] = SDL_LoadBMP("Images/3.bmp");
-	images[4] = SDL_LoadBMP("Images/4.bmp");
-	images[5] = SDL_LoadBMP("Images/5.bmp");
-	images[6] = SDL_LoadBMP("Images/6.bmp");
-	images[7] = SDL_LoadBMP("Images/7.bmp");
-	images[8] = SDL_LoadBMP("Images/8.bmp");
-	images[9] = SDL_LoadBMP("Images/flagged.bmp");
-	images[10] = SDL_LoadBMP("Images/covered.bmp");
-	images[11] = SDL_LoadBMP("Images/mine.bmp");
+	images[0] = SDL_LoadBMP("Images/background.bmp");
+	images[1] = SDL_LoadBMP("Images/wall.bmp");
+	images[2] = SDL_LoadBMP("Images/snake.bmp");
+	images[3] = SDL_LoadBMP("Images/apple.bmp");
 }
 
 /*
@@ -242,7 +193,7 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 
 
 void initialize_gui(int grid_width, int grid_height) {
-	initialize_window("Minesweeper", grid_width, grid_height);
+	initialize_window("Snake", grid_width, grid_height);
 	initialize_figures();
 	draw_grid();
 	while (1) {  // 1 = GUI, 0 = TERMINAL

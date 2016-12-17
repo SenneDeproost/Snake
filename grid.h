@@ -5,8 +5,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-int nr_of_flags;
-
 /*
  * Stelt de status van een vakje voor: bedekt, onthuld of afgevlagd.
  */
@@ -27,6 +25,7 @@ struct Cell {
 	int is_mine;
 };
 
+
 /*
  * De functie om de tweedimensionale array die het veld zal voorstellen aan te maken.
  * De functie neemt twee integers als argument: grid_width stelt de breedte van het veld voor
@@ -36,16 +35,16 @@ struct Cell ***allocate_grid(int grid_width, int grid_height);
 
 
 
-
 /*
  * Initialiseert het veld: maakt het veld aan, plaatst mijnen op random posities
  * en zorgt er voor dat de 'neighbouring_mines' waarde voor elk vakje juist staat.
  */
-void initialize_grid(int grid_width, int grid_height, int nr_of_mines);
+void initialize_grid(int grid_width, int grid_height);
 
 /*
  * Geeft een pointer terug naar de Cell die zich bevindt op positie (x,y) in het veld.
  */
 struct Cell *get_cell(int x, int y);
+
 
 #endif /* GRID_H_ */
