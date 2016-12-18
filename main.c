@@ -15,10 +15,27 @@
 #include "snake.h"
 
 
-int main() {
+int main(int argc, char *argv[]) {
 
 
 	srand(time(NULL));
+
+	// INPUT
+	if (argc != 3){
+		printf ("Ongeldig aantal parameters.\n");
+	}
+	else{
+		// http://stackoverflow.com/questions/12585398/how-to-pass-arguments-from-terminal-to-a-function
+			GRID_WIDTH = atoi(argv[1]);
+			GRID_HEIGHT = atoi(argv[2]);
+
+
+	/*
+	 * Naar deze statement hoef je nu niet te kijken.
+	 */
+	srand(time(NULL));
+
+
 
 // INITIALIZATION
 	initialize_grid(GRID_WIDTH, GRID_HEIGHT);
@@ -27,4 +44,5 @@ int main() {
 
 // RUN GAME LOGIC
   run_game();
+ }
  }

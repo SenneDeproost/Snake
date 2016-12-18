@@ -3,5 +3,7 @@
 
 #include <stdio.h>
 
+int GRID_WIDTH;
+int GRID_HEIGHT;
 
 #endif /* MAIN_H_ */

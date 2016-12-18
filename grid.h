@@ -52,9 +52,6 @@ void initialize_grid(int grid_width, int grid_height);
  */
 struct Cell *get_cell(int x, int y);
 
-// COLLISION
-
-void check_collision();
 
 
 #endif /* GRID_H_ */

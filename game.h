@@ -8,4 +8,8 @@
 
 void run_game(void);
 
+// COLLISION
+
+void check_collision(void);
+
 #endif /* GAME_H_ */

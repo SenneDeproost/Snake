@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "main.h"
+
 // Variabelen
 int snake_length;
 

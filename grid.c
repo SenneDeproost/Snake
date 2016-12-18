@@ -84,28 +84,6 @@ void place_apple_in_grid(){
 	get_cell(x, y)->state = APPLE;
 }
 
-// COLLISION
-
-void check_collision(){
-	int head_x;
-	int head_y;
-
-	int apple_x;
-	int apple_y;
-
- head_x = get_part(0)->x;
- head_y = get_part(0)->y;
- apple_x = apple_point.x;
- apple_y = apple_point.y;
-
-	 /* Check for collision. */
- if (head_x == apple_x && head_y == apple_y){
-	  initialize_apple();
-		get_cell(apple_x, apple_y)->state = EMPTY;
-		grow_snake();
- }
-
-}
 
 
 
