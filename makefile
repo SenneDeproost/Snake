@@ -3,7 +3,7 @@ HEADERS=game.h grid.h GUI.h main.h snake.h
 CC=gcc
 TARGET=main
 
-# MAKEFILE #s
+# MAKEFILE #
 
 all: $(OBJ)
 	@echo “Linking all object files”

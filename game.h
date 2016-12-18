@@ -2,9 +2,10 @@
 #define GAME_H_
 
 #include <stdio.h>
+#include "SDL/SDL.h"
 
 #include "grid.h"
 
-void run_game();
+void run_game(void);
 
 #endif /* GAME_H_ */

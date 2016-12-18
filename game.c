@@ -4,23 +4,13 @@
   #include "GUI.h"
   #include "grid.h"
   #include "snake.h"
+  #include "SDL/SDL.h"
 
-void run_game()
-  {
-
-    //read_GUI_input();
-  //  read_GUI_input();
-  //  sleep(0,0001); // Voorkomt dat de CPU te druk bezig is met het programma.
-//printf("tik ");
-	read_input();
-  draw_grid();
-  draw_snake();
-
-   run_game();
-   }
-
-
-void read_input(){
+void run_game(){
   read_GUI_input();
-  sleep(0);
-	}
+  move_snake();
+  clear_screen();
+  draw_snake();
+  SDL_Delay(250);
+  run_game();
+}

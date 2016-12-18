@@ -47,7 +47,7 @@ SDL_Surface* images[12];
  * Aan deze functie hoef je normaal niets aan te passen.
  */
 void clear_screen() {
-	SDL_FillRect(window, NULL, 0xFFFFFFFF);
+	SDL_FillRect(window, NULL, 0x00000000);
 	SDL_Flip(window);
 }
 
@@ -76,10 +76,10 @@ void draw_grid() {
 // Teken de vakjes in de GUI.
 for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[0], window);
 
 	}
-//	SDL_Flip(window);
+	SDL_Flip(window);
 }
 }
 
@@ -96,7 +96,7 @@ void draw_snake(){
 
 	}
 
-//SDL_Flip(window);
+SDL_Flip(window);
 
 }
 
@@ -140,28 +140,24 @@ void read_GUI_input() {
 			case SDLK_UP:
 			printf("up\n");
 			get_part(0)->direction = UP;
-			move_snake();
 				break;
 
 			/* ONDER */
 	  	case SDLK_DOWN:
 			printf("down\n");
 			get_part(0)->direction = DOWN;
-			move_snake();
 	  		break;
 
 	  	/* LINKS */
   		case SDLK_LEFT:
 			printf("left\n");
 			get_part(0)->direction = LEFT;
-			move_snake();
   			break;
 
 	  	/* RECHTS */
 	  	case SDLK_RIGHT:
 			printf("right\n");
 			get_part(0)->direction = RIGHT;
-			move_snake();
 	  		break;
 
 			}

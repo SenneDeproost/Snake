@@ -1,9 +1,10 @@
 #include "snake.h"
 #include "settings.h"
 
+
 // Variabelen
 int snake_length;
-snake_length = 3; // initieel is een slang een head en een tail, dus heeft lengte = 2.
+snake_length = 2; // initieel is een slang een head en een tail, dus heeft lengte = 2.
 
 /*
  * Stelt het twee-dimensionale veld voor. grid is een tweedimensionale array van pointers naar Cellen.
@@ -69,7 +70,7 @@ for (int i = 0; i != snake_length; i++){
 				prev_x = get_part(i)->x;
 				prev_y = get_part(i)->y;
 
-
+    // Wanneer de kop zich binnen het veld bevind.
 			if (get_part(i)->direction == UP){
 				get_part(i)->y--;
 			}
@@ -82,6 +83,28 @@ for (int i = 0; i != snake_length; i++){
 			else if (get_part(i)->direction == RIGHT){
 				get_part(i)->x++;
 			}
+
+		// Wanneer de kop het veld heeft verlaten, moet er langs de andere kant van
+		// het veld terug tevoorschijn komen.
+
+    /* BOVENSTE RAND */
+		if (get_part(i)->y < 0){
+			get_part(i)->y = get_part(i)->y + GRID_HEIGHT;
+		}
+		/* ONDERSTE RAND */
+		else if (get_part(i)->y > (GRID_HEIGHT - 1)){
+			get_part(i)->y = 0;
+		}
+		/* LINKSE RAND */
+		else if (get_part(i)->x < 0){
+			get_part(i)->x = get_part(i)->x + GRID_WIDTH;
+		}
+		/* RECHTSE RAND */
+		else if (get_part(i)->x > (GRID_WIDTH - 1)){
+			get_part(i)->x = 0;
+		}
+
+
 		}
 
 	else{
@@ -106,11 +129,6 @@ for (int i = 0; i != snake_length; i++){
 
 void initialize_snake(int max_snake_length) {
 	snake = allocate_snake(max_snake_length);
-	/*struct Coordinate *mines_coordinates = generate_random_mines(grid_width, grid_height, nr_of_mines);
-	place_mines(mines_coordinates, nr_of_mines);
-	compute_neighbouring_mines(mines_coordinates, grid_width, grid_height, nr_of_mines);
-	free(mines_coordinates);
-	nr_of_flags = NR_OF_MINES; // Zet variabele goed.*/
 
   // Zet in het midden van het veld de kop van de slang.
   int a;
@@ -128,9 +146,7 @@ void initialize_snake(int max_snake_length) {
 
   // Zet de direction initieel op right.
   get_part(0)->direction = RIGHT;
-  get_part(1)->direction = RIGHT;
-
- // Zet de kengte van de slang initieel op 2.
+//  get_part(1)->direction = RIGHT;
 
 
 }
