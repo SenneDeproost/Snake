@@ -76,11 +76,21 @@ void draw_grid() {
 // Teken de vakjes in de GUI.
 for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[0], window);
+
+		// Als de cell een apple is.
+		if (get_cell(i, j)->state == APPLE){
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
+		}
+		// Als de cell empty is.
+		else {
+	//		draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[0], window);
+		}
+
 
 	}
 	SDL_Flip(window);
 }
+
 }
 
 void draw_snake(){
@@ -139,25 +149,33 @@ void read_GUI_input() {
 			/* BOVEN */
 			case SDLK_UP:
 			printf("up\n");
+			if (get_part(0)->direction != DOWN){
 			get_part(0)->direction = UP;
+		  }
 				break;
 
 			/* ONDER */
 	  	case SDLK_DOWN:
 			printf("down\n");
+			if (get_part(0)->direction != UP){
 			get_part(0)->direction = DOWN;
+		  }
 	  		break;
 
 	  	/* LINKS */
   		case SDLK_LEFT:
 			printf("left\n");
+			if (get_part(0)->direction != RIGHT){
 			get_part(0)->direction = LEFT;
+		  }
   			break;
 
 	  	/* RECHTS */
 	  	case SDLK_RIGHT:
 			printf("right\n");
+			if (get_part(0)->direction != LEFT){
 			get_part(0)->direction = RIGHT;
+		  }
 	  		break;
 
 			}

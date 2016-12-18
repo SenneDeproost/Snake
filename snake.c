@@ -124,6 +124,13 @@ for (int i = 0; i != snake_length; i++){
 	}
 }
 
+// GROW
+void grow_snake(){
+	get_part(snake_length - 1)->part = BODY; /* Het laatste stuk van slang wordt body */
+	get_part(snake_length)->part = TAIL; /* Voeg een stuk toe die de nieuwe tail wordt van de slang.  */
+	snake_length = snake_length + 1;
+}
+
 
 
 

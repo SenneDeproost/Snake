@@ -9,9 +9,9 @@
  * Stelt de status van een vakje voor: bedekt, onthuld of afgevlagd.
  */
 enum State {
-	COVERED,
-	UNCOVERED,
-	FLAGGED
+	EMPTY,
+	WALL,
+	APPLE
 };
 
 /*
@@ -21,10 +21,16 @@ enum State {
  */
 struct Cell {
 	enum State state;
-	int neighbouring_mines;
-	int is_mine;
 };
 
+// APPLE
+
+struct Point{
+	int x;
+	int y;
+};
+
+struct Point apple_point;
 
 /*
  * De functie om de tweedimensionale array die het veld zal voorstellen aan te maken.
@@ -45,6 +51,10 @@ void initialize_grid(int grid_width, int grid_height);
  * Geeft een pointer terug naar de Cell die zich bevindt op positie (x,y) in het veld.
  */
 struct Cell *get_cell(int x, int y);
+
+// COLLISION
+
+void check_collision();
 
 
 #endif /* GRID_H_ */

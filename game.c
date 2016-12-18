@@ -7,9 +7,11 @@
   #include "SDL/SDL.h"
 
 void run_game(){
+  clear_screen();
+  check_collision();
   read_GUI_input();
   move_snake();
-  clear_screen();
+  draw_grid();
   draw_snake();
   SDL_Delay(250);
   run_game();

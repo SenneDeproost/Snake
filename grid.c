@@ -1,5 +1,7 @@
 #include "grid.h"
 #include "main.h"
+#include "settings.h"
+#include "snake.h"
 
 
 /*
@@ -62,83 +64,56 @@ void deallocate_grid(int grid_width, int grid_height){
 free(grid);
 }
 
+// APPLE
 
-
-
-
-
-
-
-
-
-
-
-/************************************************************************************************************
- * De code die hieronder staat hebben jullie normaal gezien NIET nodig.										*
- * Deze code wordt gebruikt om het veld te initialiseren: om de grid-array aan te maken, mijnen te plaatsen *
- * en te berekenen hoeveel naburige mijnen elk vakje bevat.													*
- * Enkel als je beslist om bv. de eerste bonusfeature te implementeren (om het veld pas te initialiseren    *
- * nadat de speler de eerste beurt gedaan heeft, zal je mogelijk deze code moeten aanpassen.				*
- ************************************************************************************************************/
-
-/*
- * Maakt een 1-dimensionale sequentiële array aan van lengte grid_width * grid_height, die opgevuld wordt door de getallen
- * gaande van 0 tot lengte - 1.
- */
-static int *generate_sequential_array(int grid_width, int grid_height) {
-	int *sequential_array = (int *) malloc(grid_width * grid_height * sizeof(int));
-
-	int i;
-	for (i = 0; i < grid_width * grid_height; i++) {
-		sequential_array[i] = i;
-	}
-
-	return sequential_array;
+void initialize_apple(){
+	generate_random_apple();
+	place_apple_in_grid();
 }
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
- * Genereert nr_of_mines aantal random, verschillende posities voor de mijnen die initieel in het veld geplaatst worden.
- */
-static struct Coordinate* generate_random_mines(int grid_width, int grid_height, int nr_of_mines) {
-	// Random, verschillende waarden genereren: http://stackoverflow.com/questions/196017/unique-non-repeating-random-numbers-in-o1
 
-	if (nr_of_mines > grid_width * grid_height) {
-		printf("There are more mines than cells in the grid. Aborting...\n");
-		exit(1);
-	}
-
-	int mines_selected = 0;
-	/* De array van coördinaten waar de mijnen zullen geplaatst worden. */
-	struct Coordinate *coordinates_of_mines = malloc(nr_of_mines * sizeof(struct Coordinate));
-	int *sequential_array = generate_sequential_array(grid_width, grid_height);
-
-	/* Vul de array coordinates_of_mines op. */
-	while (mines_selected < nr_of_mines) {
-		/* Kies een random index in de sequentiële arra.y */
-		int r = rand() % (grid_width * grid_height - mines_selected);
-		int i = sequential_array[r];
-
-		/* Verwissel het laatste element in de sequentiële array met het element op positie r. */
-		sequential_array[r] = sequential_array[grid_width * grid_height - mines_selected - 1];
-		sequential_array[grid_width * grid_height - mines_selected - 1] = i;
-
-		/* Bereken het coordinaat dat overeenkomt met het getal i. */
-		int x = i % grid_width;
-		int y = i / grid_width;
-
-		struct Coordinate coordinate = { x, y };
-		coordinates_of_mines[mines_selected] = coordinate;
-		mines_selected++;
-	}
-
-	free(sequential_array);
-
-	return coordinates_of_mines;
+void generate_random_apple(){
+	apple_point.x = rand() % GRID_WIDTH;
+	apple_point.y = rand() % GRID_HEIGHT;
 }
+
+void place_apple_in_grid(){
+	int x;
+	int y;
+	x = apple_point.x;
+	y = apple_point.y;
+	get_cell(x, y)->state = APPLE;
+}
+
+// COLLISION
+
+void check_collision(){
+	int head_x;
+	int head_y;
+
+	int apple_x;
+	int apple_y;
+
+ head_x = get_part(0)->x;
+ head_y = get_part(0)->y;
+ apple_x = apple_point.x;
+ apple_y = apple_point.y;
+
+	 /* Check for collision. */
+ if (head_x == apple_x && head_y == apple_y){
+	  initialize_apple();
+		get_cell(apple_x, apple_y)->state = EMPTY;
+		grow_snake();
+ }
+
+}
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void initialize_grid(int grid_width, int grid_height) {
 	grid = allocate_grid(grid_width, grid_height);
+	  initialize_apple();
 	/*struct Coordinate *mines_coordinates = generate_random_mines(grid_width, grid_height, nr_of_mines);
 	place_mines(mines_coordinates, nr_of_mines);
 	compute_neighbouring_mines(mines_coordinates, grid_width, grid_height, nr_of_mines);
