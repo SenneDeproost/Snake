@@ -18,6 +18,7 @@
  */
 void initialize_gui(int grid_width, int grid_height);
 
+
 /*
  * Tekent het huidige veld in het venster. Deze functie moeten jullie dus zelf implementeren.
  */

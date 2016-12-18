@@ -39,6 +39,7 @@ static SDL_Surface *window;
  */
 SDL_Surface* images[12];
 
+
 /*
  * Maakt het hele venster blanco: deze functie kan je eventueel aanroepen voor
  * je iets begint te tekenen in het venster, zodat alle afbeeldingen die eerder
@@ -67,32 +68,35 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 
 
 /*
- * DRAW GRID
+ * Deze functie moet je zelf vervolledigen: je mag alles aan deze functie
+ * (inclusief return-type en argumenten) aanpassen, indien nodig.
  */
 void draw_grid() {
 
 // Teken de vakjes in de GUI.
 for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window); //DEBUG
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
 
 	}
-	SDL_Flip(window);
+//	SDL_Flip(window);
 }
 }
 
-/*
- * DRAW SNAKE
- */
+void draw_snake(){
 
-void draw_snake() {
-	printf("draw snake \n");
-draw_on_screen(
-	get_part(0)->x * IMAGE_WIDTH,
-	get_part(0)->y * IMAGE_HEIGHT,
-	images[2],
-	window
-);
+	for(int i = 0; i != snake_length; i++){
+
+		draw_on_screen(
+			(get_part(i)->x) * IMAGE_WIDTH,
+			(get_part(i)->y) * IMAGE_HEIGHT,
+			images[2],
+			window
+		);
+
+	}
+
+//SDL_Flip(window);
 
 }
 
@@ -128,33 +132,37 @@ void read_GUI_input() {
 
 			exit(0);
 
+		// Bediening van de slang met de pijltjestoetsen.
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 
-      // Besturing met de pijltjestoetsen.
-
-			/* Boven */
+			/* BOVEN */
 			case SDLK_UP:
-			//get_part(0)->y = get_part(0)->y - 1;
 			printf("up\n");
-			break;
-				/* Onder */
-			case SDLK_DOWN:
-			//get_part(0)->y = get_part(0)->y + 1;
+			get_part(0)->direction = UP;
+			move_snake();
+				break;
+
+			/* ONDER */
+	  	case SDLK_DOWN:
 			printf("down\n");
-			break;
-			/* Links */
-			case SDLK_LEFT:
-			//et_part(0)->x = get_part(0)->x - 1;
+			get_part(0)->direction = DOWN;
+			move_snake();
+	  		break;
+
+	  	/* LINKS */
+  		case SDLK_LEFT:
 			printf("left\n");
-			//draw_snake();
-			break;
-			/* Rechts */
-			case SDLK_RIGHT:
-			//get_part(0)->x = get_part(0)->x + 1;
+			get_part(0)->direction = LEFT;
+			move_snake();
+  			break;
+
+	  	/* RECHTS */
+	  	case SDLK_RIGHT:
 			printf("right\n");
-			//draw_snake();
-			break;
+			get_part(0)->direction = RIGHT;
+			move_snake();
+	  		break;
 
 			}
 			break;
@@ -233,16 +241,10 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 void initialize_gui(int grid_width, int grid_height) {
 	initialize_window("Snake", grid_width, grid_height);
 	initialize_figures();
-	//draw_snake();
-draw_grid();
-	//draw_snake();
-	//while (1) {  // 1 = GUI, 0 = TERMINAL
-		//read_GUI_input();
-		//draw_snake();
-		//sleep(0.1); // Voorkomt dat de CPU te druk bezig is met het programma.
-
- //}
-
+	/*while (1) {  // 1 = GUI, 0 = TERMINAL
+		read_GUI_input();
+		sleep(0,0001); // Voorkomt dat de CPU te druk bezig is met het programma.
+	}*/
 	atexit(stop_gui);
 }
 

@@ -1,6 +1,10 @@
 #include "snake.h"
 #include "settings.h"
 
+// Variabelen
+int snake_length;
+snake_length = 3; // initieel is een slang een head en een tail, dus heeft lengte = 2.
+
 /*
  * Stelt het twee-dimensionale veld voor. grid is een tweedimensionale array van pointers naar Cellen.
  * Jullie moeten deze variabele zelf niet gebruiken: in de plaats kan je gebruik maken van de functie get_cell hieronder.
@@ -36,16 +40,72 @@ for(int i = 0; i < snake_length; i++) {
 DEALLOCATE SNAKE
 */
 
-void deallocate_snake(int snake_length){
+void deallocate_snake(int max_snake_length){
 
-	for(int i = 0 ; i < snake_length; i++){
+	for(int i = 0 ; i < max_snake_length; i++){
 		free(snake[i]);
 }
 free(snake);
 }
 
-void initialize_snake(int snake_length) {
-	snake = allocate_snake(snake_length);
+/*
+MOVE SNAKE_H_
+*/
+// Laat de slang 1 stap bewegen in de richting die gelijk is aan direction van de head.
+void move_snake(){
+
+// Variabelen die gebruikt woren om de vorige x en y waarden van een part bij te houden
+int prev_x;
+int prev_y;
+
+for (int i = 0; i != snake_length; i++){
+
+
+
+	// HEAD
+	if (get_part(i)->part == HEAD){
+
+
+				prev_x = get_part(i)->x;
+				prev_y = get_part(i)->y;
+
+
+			if (get_part(i)->direction == UP){
+				get_part(i)->y--;
+			}
+			else if (get_part(i)->direction == DOWN){
+				get_part(i)->y++;
+			}
+			else if (get_part(i)->direction == LEFT){
+				get_part(i)->x--;
+			}
+			else if (get_part(i)->direction == RIGHT){
+				get_part(i)->x++;
+			}
+		}
+
+	else{
+  // REST
+		/* Zet de x en y waarden juist. Dit wordt gedaan door de part te zetten op de
+		positie van de voorgaande block. */
+		int buffer_x;
+		int buffer_y;
+		buffer_x = get_part(i)->x;
+		buffer_y = get_part(i)->y;
+		get_part(i)->x = prev_x;
+		get_part(i)->y = prev_y;
+		prev_x = buffer_x;
+		prev_y = buffer_y;
+  	}
+
+	}
+}
+
+
+
+
+void initialize_snake(int max_snake_length) {
+	snake = allocate_snake(max_snake_length);
 	/*struct Coordinate *mines_coordinates = generate_random_mines(grid_width, grid_height, nr_of_mines);
 	place_mines(mines_coordinates, nr_of_mines);
 	compute_neighbouring_mines(mines_coordinates, grid_width, grid_height, nr_of_mines);
@@ -69,6 +129,8 @@ void initialize_snake(int snake_length) {
   // Zet de direction initieel op right.
   get_part(0)->direction = RIGHT;
   get_part(1)->direction = RIGHT;
+
+ // Zet de kengte van de slang initieel op 2.
 
 
 }
