@@ -146,6 +146,8 @@ void read_GUI_input() {
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 
+				/* If test voorkomt dat de slang in tegengestelde richting gaat. */
+
 			/* BOVEN */
 			case SDLK_UP:
 			printf("up\n");
