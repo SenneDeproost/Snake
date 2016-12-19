@@ -6,6 +6,8 @@
   #include "snake.h"
   #include "SDL/SDL.h"
 
+  pause = 0; /* Zet pause initieel op 0. */
+
 void run_game(){
   clear_screen();
   read_GUI_input();
@@ -16,6 +18,19 @@ void run_game(){
   SDL_Delay(250);
   run_game();
 }
+
+void pause_game(){
+  pause == 1;
+  draw_grid();
+  draw_snake();
+  while (pause){
+  SDL_Delay(250);
+  read_GUI_input();
+  pause_game();
+ }
+ run_game();
+}
+
 
 // COLLISION
 

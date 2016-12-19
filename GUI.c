@@ -146,6 +146,19 @@ void read_GUI_input() {
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 
+
+
+      /* Pauze */
+		//	case SDLK_BACKSPACE:
+		/*	if (pause == 1){
+				pause = 0;
+			}
+			else {
+			pause_game();
+		}*/
+			//printf("p");
+			 //break;
+
 				/* If test voorkomt dat de slang in tegengestelde richting gaat. */
 
 			/* BOVEN */
@@ -179,6 +192,20 @@ void read_GUI_input() {
 			get_part(0)->direction = RIGHT;
 		  }
 	  		break;
+
+				/* Toetsen om andere spelfuncties aan te sturen */
+
+				/* RECHTS */
+		  	case SDLK_p:
+				printf("pause\n");
+				if (pause == 0){
+				pause = 1;
+				pause_game();
+			  }
+				else{
+					pause = 0;
+				}
+		  		break;
 
 			}
 			break;

@@ -8,6 +8,11 @@
 
 void run_game(void);
 
+// PAUSE
+
+int pause;
+void pause_game(void);
+
 // COLLISION
 
 void check_collision(void);
