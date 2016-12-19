@@ -7,7 +7,7 @@ TARGET=main
 
 all: $(OBJ)
 	@echo “Linking all object files”
-	$(CC) $(OBJ) -lSDL -o $(TARGET)
+	$(CC) $(OBJ) -lSDL -lSDL_ttf -o $(TARGET)
 
 game.o: game.c $(HEADERS)
 	@echo “Compiling game.c”

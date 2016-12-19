@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include "settings.h"
 /*
  * Stelt de status van een vakje voor: bedekt, onthuld of afgevlagd.
  */
@@ -31,6 +31,10 @@ struct Point{
 };
 
 struct Point apple_point;
+
+// WALL
+
+struct Point walls[number_of_wall_blocks];
 
 /*
  * De functie om de tweedimensionale array die het veld zal voorstellen aan te maken.

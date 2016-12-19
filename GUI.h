@@ -2,6 +2,7 @@
 #define GUI_H_
 
 #include "SDL/SDL.h"
+#include "SDL/SDL_ttf.h"
 
 /*
  * De hoogte en breedte (in pixels) van de afbeeldingen die getoond worden.
@@ -26,6 +27,12 @@ void clear_screen();
 void draw_grid(void);
 
 void draw_snake(void);
+
+void draw_walls(void);
+
+// SCORE
+
+void draw_score();
 
 
 

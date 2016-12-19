@@ -11,4 +11,6 @@
 
 #define MAX_SNAKE_LENGTH 100
 
+#define number_of_wall_blocks 20
+
 #endif /* SETTINGS_H_ */

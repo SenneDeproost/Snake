@@ -20,6 +20,7 @@ struct Cell *get_cell(int x, int y) {
 }
 
 
+
 /*
  * Stelt een positie voor: elke positie heeft een x- en een y-coordinaat.
  */
@@ -84,7 +85,18 @@ void place_apple_in_grid(){
 	get_cell(x, y)->state = APPLE;
 }
 
+// WALL
 
+void initialize_walls(){
+	place_walls_in_grid();
+}
+
+void place_walls_in_grid(){
+	for (int i = 0; i == number_of_wall_blocks; i++){
+		walls[i].x = i;
+		walls[i].y = 3;
+	}
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,6 +104,7 @@ void place_apple_in_grid(){
 void initialize_grid(int grid_width, int grid_height) {
 	grid = allocate_grid(grid_width, grid_height);
 	  initialize_apple();
+		initialize_walls();
 	/*struct Coordinate *mines_coordinates = generate_random_mines(grid_width, grid_height, nr_of_mines);
 	place_mines(mines_coordinates, nr_of_mines);
 	compute_neighbouring_mines(mines_coordinates, grid_width, grid_height, nr_of_mines);

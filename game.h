@@ -6,6 +6,8 @@
 
 #include "grid.h"
 
+int score;
+
 void run_game(void);
 
 // PAUSE

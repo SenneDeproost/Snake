@@ -7,13 +7,18 @@
   #include "SDL/SDL.h"
 
   pause = 0; /* Zet pause initieel op 0. */
+  score = 0;
 
 void run_game(){
   clear_screen();
   read_GUI_input();
   move_snake();
+
+  draw_walls();
   draw_grid();
   draw_snake();
+  draw_score();
+
   check_collision();
   SDL_Delay(250);
   run_game();
@@ -21,8 +26,10 @@ void run_game(){
 
 void pause_game(){
   pause == 1;
+
   draw_grid();
   draw_snake();
+
   while (pause){
   SDL_Delay(250);
   read_GUI_input();
@@ -51,6 +58,7 @@ void check_collision(){
 	  initialize_apple();
 		get_cell(apple_x, apple_y)->state = EMPTY;
 		grow_snake();
+    score = score + 50;
  }
 
   /* Check for collision HEAD and BODY. */

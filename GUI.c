@@ -5,6 +5,8 @@
 #include "settings.h"
 #include "snake.h"
 
+#include <stdio.h>
+
 
 /*
  *
@@ -110,6 +112,25 @@ SDL_Flip(window);
 
 }
 
+void draw_walls(){
+
+	for(int i = 0; i != number_of_wall_blocks; i++){
+printf("%i\n",walls[i].x );
+		draw_on_screen(
+			walls[i].x * IMAGE_WIDTH,
+			walls[i].y * IMAGE_HEIGHT,
+			images[1],
+			window
+		);
+
+	}
+
+SDL_Flip(window);
+
+}
+
+
+
 /*
  * Vangt de input uit de GUI op. Deze functie is al deels geïmplementeerd, maar je moet die zelf
  * nog afwerken. Je mag opnieuw alles aanpassen aan deze functie, inclusies return-type en argumenten.
@@ -146,20 +167,7 @@ void read_GUI_input() {
 		case SDL_KEYDOWN:
 			switch (event.key.keysym.sym) {
 
-
-
-      /* Pauze */
-		//	case SDLK_BACKSPACE:
-		/*	if (pause == 1){
-				pause = 0;
-			}
-			else {
-			pause_game();
-		}*/
-			//printf("p");
-			 //break;
-
-				/* If test voorkomt dat de slang in tegengestelde richting gaat. */
+			/* If test voorkomt dat de slang in tegengestelde richting gaat. */
 
 			/* BOVEN */
 			case SDLK_UP:
@@ -260,10 +268,31 @@ void initialize_figures() {
  * Initialiseer het venster.
  */
 void initialize_window(char *title, int grid_width, int grid_height) {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
         printf("Could not initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
+
+
+
+		// Initialize SDL_ttf library
+    if (TTF_Init() != 0)
+    {
+       SDL_Quit();
+       exit(1);
+    }
+
+    // Load a font
+    TTF_Font *font;
+    font = TTF_OpenFont("arial.ttf", 24);
+    if (font == NULL)
+    {
+       TTF_Quit();
+       SDL_Quit();
+       exit(1);
+    }
+
+
 
     int window_width = grid_width * IMAGE_WIDTH;
     int window_height = grid_height * IMAGE_HEIGHT;
@@ -272,8 +301,36 @@ void initialize_window(char *title, int grid_width, int grid_height) {
         printf("Couldn't set screen mode to required dimensions: %s\n", SDL_GetError());
         exit(1);
     }
+
     /* Set the screen title */
     SDL_WM_SetCaption(title, NULL);
+
+
+
+        // Convert integer to string
+//				int aInt = 368;
+//        char str[15];
+//      printf ("%s", sprintf(str, "%d", aInt));
+
+		    // Write text to surface
+		    SDL_Surface *text;
+		    SDL_Color text_color = {255, 255, 255};
+		    text = TTF_RenderText_Solid(font,
+				"0",
+		    text_color);
+
+		    if (text == NULL)
+		    {
+
+		       TTF_Quit();
+		       SDL_Quit();
+		       exit(1);
+		    }
+
+				draw_on_screen(50, 50, text, window);
+				SDL_Flip(window);
+
+
 }
 
 /*
@@ -284,17 +341,9 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 void initialize_gui(int grid_width, int grid_height) {
 	initialize_window("Snake", grid_width, grid_height);
 	initialize_figures();
-	/*while (1) {  // 1 = GUI, 0 = TERMINAL
-		read_GUI_input();
-		sleep(0,0001); // Voorkomt dat de CPU te druk bezig is met het programma.
-	}*/
 	atexit(stop_gui);
 }
 
-/*
-int main(int argc, char *argv[]) {
-	initialize_gui(10, 10);
-	while (1) { read_input(); }
-	return 0;
+void draw_score(){
+	printf("");
 }
-*/
