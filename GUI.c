@@ -73,7 +73,7 @@ SDL_BlitSurface( source, NULL, destination, &offset );
  * Deze functie moet je zelf vervolledigen: je mag alles aan deze functie
  * (inclusief return-type en argumenten) aanpassen, indien nodig.
  */
-void draw_grid() {
+void draw_grid(){
 
 // Teken de vakjes in de GUI.
 for (int i = 0; i <= (GRID_WIDTH - 1); i++){
@@ -83,12 +83,6 @@ for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 		if (get_cell(i, j)->state == APPLE){
 			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
 		}
-		// Als de cell empty is.
-		else {
-	//		draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[0], window);
-		}
-
-
 	}
 	SDL_Flip(window);
 }
@@ -96,8 +90,8 @@ for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 }
 
 void draw_snake(){
-
-	for(int i = 0; i != snake_length; i++){
+	remove_tail();
+	for(int i = 0; i != snake_length - 1; i++){
 
 		draw_on_screen(
 			(get_part(i)->x) * IMAGE_WIDTH,
@@ -107,9 +101,20 @@ void draw_snake(){
 		);
 
 	}
+//int snake_length = 1;
+
 
 SDL_Flip(window);
 
+}
+
+
+void remove_tail(){
+	  draw_on_screen((get_part(snake_length - 1)->x + 1) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 0) * IMAGE_HEIGHT, images[0], window);
+		draw_on_screen((get_part(snake_length - 1)->x - 1) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 0) * IMAGE_HEIGHT, images[0], window);
+		draw_on_screen((get_part(snake_length - 1)->x + 0) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 1) * IMAGE_HEIGHT, images[0], window);
+		draw_on_screen((get_part(snake_length - 1)->x + 0) * IMAGE_WIDTH, (get_part(snake_length - 1)->y - 1) * IMAGE_HEIGHT, images[0], window);
+		SDL_Flip(window);
 }
 
 void draw_walls(){

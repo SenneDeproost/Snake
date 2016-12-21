@@ -36,5 +36,4 @@ void draw_score();
 
 
 
-
 #endif /* GUI_H_ */

@@ -10,14 +10,17 @@
   score = 0;
 
 void run_game(){
-  clear_screen();
+  //clear_screen();
   read_GUI_input();
+
   move_snake();
 
-  draw_walls();
   draw_grid();
   draw_snake();
+  draw_walls();
   draw_score();
+
+
 
   check_collision();
   SDL_Delay(250);
