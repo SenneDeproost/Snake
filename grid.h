@@ -32,9 +32,24 @@ struct Point{
 
 struct Point apple_point;
 
+
+
+
 // WALL
 
-struct Point walls[number_of_wall_blocks];
+struct Wall_part *get_wall(int i);
+
+
+struct Wall_part {
+  int x;
+  int y;
+
+};
+
+
+//struct Point walls[NR_OF_WALL_BLOCKS];
+struct Wall_part **allocate_wall(int nr_of_wall_blocks);
+
 
 /*
  * De functie om de tweedimensionale array die het veld zal voorstellen aan te maken.

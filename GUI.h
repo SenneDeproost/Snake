@@ -4,6 +4,7 @@
 #include "SDL/SDL.h"
 #include "SDL/SDL_ttf.h"
 
+
 /*
  * De hoogte en breedte (in pixels) van de afbeeldingen die getoond worden.
  * Als je andere afbeelding wil gebruiken in je GUI, zorg er dan voor dat deze
@@ -34,6 +35,8 @@ void draw_snake(void);
 void draw_walls(void);
 
 // SCORE
+
+void draw_score(void);
 
 
 

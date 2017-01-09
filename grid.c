@@ -85,17 +85,68 @@ void place_apple_in_grid(){
 	get_cell(x, y)->state = APPLE;
 }
 
+
+
+
+
+
 // WALL
 
-void initialize_walls(){
-	place_walls_in_grid();
+static struct Wall_part** walls;
+
+
+
+struct Wall_part *get_wall(int i) {
+	return walls[i];
 }
 
-void place_walls_in_grid(){
-	for (int i = 0; i == number_of_wall_blocks; i++){
-		walls[i].x = i;
-		walls[i].y = 3;
+struct Wall_part **allocate_wall(int nr_of_wall_blocks){
+// BRONNEN:
+// http://stackoverflow.com/questions/3275381/how-to-implement-a-2-dimensional-array-of-struct-in-c
+// http://stackoverflow.com/questions/26454022/storing-and-accessing-a-2d-array-in-a-struct
+
+struct Wall_part** walls = (struct Wall_part**) malloc(sizeof(struct Wall_part**) * nr_of_wall_blocks);
+for(int i = 0; i < nr_of_wall_blocks; i++) {
+	walls[i] = (struct Wall_part*) malloc(sizeof(struct Wall_part));
 	}
+ return walls;
+}
+
+
+void deallocate_wall(int nr_of_wall_blocks){
+
+	for(int i = 0 ; i < nr_of_wall_blocks; i++){
+		free(walls[i]);
+}
+free(walls);
+}
+
+void initialize_walls(){
+	walls = allocate_wall(NR_OF_WALL_BLOCKS);
+  place_walls_in_grid();
+}
+
+
+void place_walls_in_grid(){
+	for (int i = 0; i < 5; i++){
+		get_wall(i)->x = 0;
+		get_wall(i)->y = i;
+	}
+
+	for (int i = 0 + 5; i < 5 + 5; i++){
+		get_wall(i)->x = 6;
+		get_wall(i)->y = i + 5;
+	}
+
+	for (int i = 0 + 10; i < 5 + 9; i++){
+		get_wall(i)->x = i + 2;
+		get_wall(i)->y = 8;
+}
+
+//get_wall(15)->x = 5;
+//get_wall(15)->y = 6;
+
+
 }
 
 
@@ -103,8 +154,8 @@ void place_walls_in_grid(){
 
 void initialize_grid(int grid_width, int grid_height) {
 	grid = allocate_grid(grid_width, grid_height);
-	  initialize_apple();
-		initialize_walls();
+	initialize_apple();
+	initialize_walls();
 	/*struct Coordinate *mines_coordinates = generate_random_mines(grid_width, grid_height, nr_of_mines);
 	place_mines(mines_coordinates, nr_of_mines);
 	compute_neighbouring_mines(mines_coordinates, grid_width, grid_height, nr_of_mines);

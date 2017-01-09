@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 
+
 #define background 0
 #define wall 1
 #define snake 2
@@ -123,11 +124,11 @@ void remove_tail(){
 
 void draw_walls(){
 
-	for(int i = 0; i != number_of_wall_blocks; i++){
-//printf("%i\n",walls[i].x );
+	for(int i = 0; i != NR_OF_WALL_BLOCKS; i++){
+printf("%i %i\n",get_wall(i)->x, get_wall(i)->y );
 		draw_on_screen(
-			walls[i].x * IMAGE_WIDTH,
-			walls[i].y * IMAGE_HEIGHT,
+			get_wall(i)->x * IMAGE_WIDTH,
+			get_wall(i)->y * IMAGE_HEIGHT,
 			images[wall],
 			window
 		);
@@ -317,23 +318,37 @@ void initialize_window(char *title, int grid_width, int grid_height) {
     SDL_WM_SetCaption(title, NULL);
 
 
-
-        // Convert integer to string
-//				int aInt = 368;
-//        char str[15];
-//      printf ("%s", sprintf(str, "%d", aInt));
+}
 
 
 
+void draw_score(){
+char str[15];
+int test =  sprintf(str, "%d", 5);
+
+   sprintf(str, "%d", score);
+  // puts(str);
 
 
+	text = TTF_RenderText_Solid(font,
+					str,
+			    text_color);
+
+			    if (text == NULL)
+			    {
+
+			       TTF_Quit();
+			       SDL_Quit();
+			       exit(1);
+			    }
+
+					draw_on_screen(window_WIDTH / 2, window_HEIGHT - 40, text, window);
+					SDL_Flip(window);
 }
 
 /*
  * Initialiseer de GUI. De functie krijgt de breedte en de hoogte van het speelveld mee als argumenten.
  */
-
-
 
 void initialize_gui(int grid_width, int grid_height) {
 	initialize_window("Snake", grid_width, grid_height);
