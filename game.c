@@ -9,6 +9,8 @@
   pause = 0; /* Zet pause initieel op 0. */
   score = 0;
 
+
+
 void run_game(){
   //clear_screen();
   read_GUI_input();
@@ -18,8 +20,7 @@ void run_game(){
   draw_grid();
   draw_snake();
   draw_walls();
-  draw_score();
-
+  //test();
 
 
   check_collision();

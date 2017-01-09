@@ -21,6 +21,9 @@ void initialize_gui(int grid_width, int grid_height);
 
 void clear_screen();
 
+int last_tail_x;
+int last_tail_y;
+
 /*
  * Tekent het huidige veld in het venster. Deze functie moeten jullie dus zelf implementeren.
  */
@@ -32,7 +35,6 @@ void draw_walls(void);
 
 // SCORE
 
-void draw_score();
 
 
 

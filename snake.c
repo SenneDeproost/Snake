@@ -1,5 +1,6 @@
 #include "snake.h"
 #include "settings.h"
+#include "GUI.h"
 
 
 // Variabelen
@@ -59,6 +60,11 @@ void move_snake(){
 int prev_x;
 int prev_y;
 
+// TAIL
+last_tail_x = get_part(snake_length - 1)->x;
+last_tail_y = get_part(snake_length - 1)->y;
+
+
 for (int i = 0; i != snake_length; i++){
 
 
@@ -107,6 +113,7 @@ for (int i = 0; i != snake_length; i++){
 
 		}
 
+
 	else{
   // REST
 		/* Zet de x en y waarden juist. Dit wordt gedaan door de part te zetten op de
@@ -120,6 +127,7 @@ for (int i = 0; i != snake_length; i++){
 		prev_x = buffer_x;
 		prev_y = buffer_y;
   	}
+
 
 	}
 }

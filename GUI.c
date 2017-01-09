@@ -7,6 +7,21 @@
 
 #include <stdio.h>
 
+#define background 0
+#define wall 1
+#define snake 2
+#define apple 3
+
+int last_tail_x = 0;
+int last_tail_y = 0;
+
+int window_WIDTH;
+int window_HEIGHT;
+
+TTF_Font *font;
+SDL_Surface *text;
+SDL_Color text_color = {255, 255, 255};
+
 
 /*
  *
@@ -24,21 +39,6 @@
  */
 static SDL_Surface *window;
 
-/*
- * Deze array bevat de 12 afbeeldingen die gebruikt worden tijdens het spel:
- * images[0]: de afbeelding die een onthuld vak met 0 mijnen als buur voorstelt
- * images[1]: de afbeelding die een onthuld vak met 1 mijn als buur voorstelt
- * images[2]: de afbeelding die een onthuld vak met 2 mijnen als buur voorstelt
- * images[3]: de afbeelding die een onthuld vak met 3 mijnen als buur voorstelt
- * images[4]: de afbeelding die een onthuld vak met 4 mijnen als buur voorstelt
- * images[5]: de afbeelding die een onthuld vak met 5 mijnen als buur voorstelt
- * images[6]: de afbeelding die een onthuld vak met 6 mijnen als buur voorstelt
- * images[7]: de afbeelding die een onthuld vak met 7 mijnen als buur voorstelt
- * images[8]: de afbeelding die een onthuld vak met 8 mijnen als buur voorstelt
- * images[9]: de afbeelding die een vak met een vlag voorstelt
- * images[10]: de afbeelding die een niet-onthuld vak voorstelt
- * images[11]: de afbeelding die een vak met een mijn voorstelt
- */
 SDL_Surface* images[12];
 
 
@@ -69,10 +69,11 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 }
 
 
-/*
- * Deze functie moet je zelf vervolledigen: je mag alles aan deze functie
- * (inclusief return-type en argumenten) aanpassen, indien nodig.
- */
+
+
+
+
+
 void draw_grid(){
 
 // Teken de vakjes in de GUI.
@@ -90,19 +91,19 @@ for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 }
 
 void draw_snake(){
-	remove_tail();
+
 	for(int i = 0; i != snake_length - 1; i++){
 
 		draw_on_screen(
 			(get_part(i)->x) * IMAGE_WIDTH,
 			(get_part(i)->y) * IMAGE_HEIGHT,
-			images[2],
+			images[snake],
 			window
 		);
 
 	}
-//int snake_length = 1;
 
+remove_tail();
 
 SDL_Flip(window);
 
@@ -110,21 +111,24 @@ SDL_Flip(window);
 
 
 void remove_tail(){
-	  draw_on_screen((get_part(snake_length - 1)->x + 1) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 0) * IMAGE_HEIGHT, images[0], window);
-		draw_on_screen((get_part(snake_length - 1)->x - 1) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 0) * IMAGE_HEIGHT, images[0], window);
-		draw_on_screen((get_part(snake_length - 1)->x + 0) * IMAGE_WIDTH, (get_part(snake_length - 1)->y + 1) * IMAGE_HEIGHT, images[0], window);
-		draw_on_screen((get_part(snake_length - 1)->x + 0) * IMAGE_WIDTH, (get_part(snake_length - 1)->y - 1) * IMAGE_HEIGHT, images[0], window);
-		SDL_Flip(window);
+
+	draw_on_screen(
+		last_tail_x * IMAGE_WIDTH,
+		last_tail_y * IMAGE_HEIGHT,
+		images[background],
+		window
+	);
+
 }
 
 void draw_walls(){
 
 	for(int i = 0; i != number_of_wall_blocks; i++){
-printf("%i\n",walls[i].x );
+//printf("%i\n",walls[i].x );
 		draw_on_screen(
 			walls[i].x * IMAGE_WIDTH,
 			walls[i].y * IMAGE_HEIGHT,
-			images[1],
+			images[wall],
 			window
 		);
 
@@ -263,10 +267,10 @@ void stop_gui() {
  * in een array 'images'.
  */
 void initialize_figures() {
-	images[0] = SDL_LoadBMP("Images/background.bmp");
-	images[1] = SDL_LoadBMP("Images/wall.bmp");
-	images[2] = SDL_LoadBMP("Images/snake.bmp");
-	images[3] = SDL_LoadBMP("Images/apple.bmp");
+	images[background] = SDL_LoadBMP("Images/background.bmp");
+	images[wall] = SDL_LoadBMP("Images/wall.bmp");
+	images[snake] = SDL_LoadBMP("Images/snake.bmp");
+	images[apple] = SDL_LoadBMP("Images/apple.bmp");
 }
 
 /*
@@ -288,7 +292,7 @@ void initialize_window(char *title, int grid_width, int grid_height) {
     }
 
     // Load a font
-    TTF_Font *font;
+    //TTF_Font *font;
     font = TTF_OpenFont("arial.ttf", 24);
     if (font == NULL)
     {
@@ -300,7 +304,9 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 
 
     int window_width = grid_width * IMAGE_WIDTH;
-    int window_height = grid_height * IMAGE_HEIGHT;
+    int window_height = grid_height * IMAGE_HEIGHT + 50;
+		window_HEIGHT = window_height;
+		window_WIDTH = window_width;
     window = SDL_SetVideoMode(window_width, window_height, 0, SDL_HWPALETTE | SDL_DOUBLEBUF);
     if (window == NULL) {
         printf("Couldn't set screen mode to required dimensions: %s\n", SDL_GetError());
@@ -317,23 +323,8 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 //        char str[15];
 //      printf ("%s", sprintf(str, "%d", aInt));
 
-		    // Write text to surface
-		    SDL_Surface *text;
-		    SDL_Color text_color = {255, 255, 255};
-		    text = TTF_RenderText_Solid(font,
-				"0",
-		    text_color);
 
-		    if (text == NULL)
-		    {
 
-		       TTF_Quit();
-		       SDL_Quit();
-		       exit(1);
-		    }
-
-				draw_on_screen(50, 50, text, window);
-				SDL_Flip(window);
 
 
 }
@@ -343,12 +334,9 @@ void initialize_window(char *title, int grid_width, int grid_height) {
  */
 
 
+
 void initialize_gui(int grid_width, int grid_height) {
 	initialize_window("Snake", grid_width, grid_height);
 	initialize_figures();
 	atexit(stop_gui);
-}
-
-void draw_score(){
-	printf("");
 }
