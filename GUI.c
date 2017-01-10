@@ -8,10 +8,6 @@
 #include <stdio.h>
 
 
-#define background 0
-#define wall 1
-#define snake 2
-#define apple 3
 
 int last_tail_x = 0;
 int last_tail_y = 0;
@@ -78,17 +74,24 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 void draw_grid(){
 
 // Teken de vakjes in de GUI.
-for (int i = 0; i <= (GRID_WIDTH - 1); i++){
+/*for (int i = 0; i <= (GRID_WIDTH - 1); i++){
 	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
 
 		// Als de cell een apple is.
 		if (get_cell(i, j)->state == APPLE){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[3], window);
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[apple], window);
 		}
-	}
-	SDL_Flip(window);
-}
 
+		// Als de cell een candy is.
+		if (get_cell(i, j)->state == CANDY){
+			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[candy], window);
+		}
+
+	}*/
+
+// Teken elementen.
+draw_walls();
+draw_apple();
 }
 
 void draw_snake(){
@@ -98,7 +101,7 @@ void draw_snake(){
 		draw_on_screen(
 			(get_part(i)->x) * IMAGE_WIDTH,
 			(get_part(i)->y) * IMAGE_HEIGHT,
-			images[snake],
+			images[snakepart],
 			window
 		);
 
@@ -125,7 +128,7 @@ void remove_tail(){
 void draw_walls(){
 
 	for(int i = 0; i != NR_OF_WALL_BLOCKS; i++){
-printf("%i %i\n",get_wall(i)->x, get_wall(i)->y );
+//printf("%i %i\n",get_wall(i)->x, get_wall(i)->y );
 		draw_on_screen(
 			get_wall(i)->x * IMAGE_WIDTH,
 			get_wall(i)->y * IMAGE_HEIGHT,
@@ -136,9 +139,39 @@ printf("%i %i\n",get_wall(i)->x, get_wall(i)->y );
 	}
 
 SDL_Flip(window);
+}
+
+
+void draw_apple(){
+
+	draw_on_screen(
+		apple_point.x * IMAGE_WIDTH,
+		apple_point.y * IMAGE_HEIGHT,
+		images[apple],
+		window
+	);
 
 }
 
+void draw_candy(){
+
+	draw_on_screen(
+		candy_point.x * IMAGE_WIDTH,
+		candy_point.y * IMAGE_HEIGHT,
+		images[candy],
+		window
+	);
+
+}
+
+void remove_candy_from_screen(){
+	draw_on_screen(
+	candy_point.x * IMAGE_WIDTH,
+	candy_point.y * IMAGE_HEIGHT,
+	images[background],
+	window
+);
+}
 
 
 /*
@@ -270,8 +303,9 @@ void stop_gui() {
 void initialize_figures() {
 	images[background] = SDL_LoadBMP("Images/background.bmp");
 	images[wall] = SDL_LoadBMP("Images/wall.bmp");
-	images[snake] = SDL_LoadBMP("Images/snake.bmp");
+	images[snakepart] = SDL_LoadBMP("Images/snake.bmp");
 	images[apple] = SDL_LoadBMP("Images/apple.bmp");
+	images[candy] = SDL_LoadBMP("Images/candy.bmp");
 }
 
 /*
@@ -324,7 +358,7 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 
 void draw_score(){
 char str[15];
-int test =  sprintf(str, "%d", 5);
+//int test =  sprintf(str, "%d", 5);
 
    sprintf(str, "%d", score);
   // puts(str);

@@ -11,19 +11,39 @@
   pause = 0; /* Zet pause initieel op 0. */
   score = 0;
 
+  gametime = 0;
+  int candytime = 0;
+
 
 
 void run_game(){
   //clear_screen();
   read_GUI_input();
+  gametime++;
+  candytime++;
+  printf("%d\n", gametime );
 
   check_collision();
 
   move_snake();
 
+  if (candytime == 40)
+  {
+    initialize_candy();
+    draw_candy();
+  }
+
+  if (candytime == 70){
+    if (candy_point.x > -1){
+      /* Eerst controleren of de candy niet al eerst buiten
+       * scherm is geplaatst door een botsing met de slang */
+      remove_candy();
+    }
+    candytime = 0;
+  }
+
   draw_grid();
   draw_snake();
-  draw_walls();
 
   //test();
 
@@ -50,16 +70,13 @@ void pause_game(){
 // COLLISION
 
 void check_collision(){
-	int head_x;
-	int head_y;
 
-	int apple_x;
-	int apple_y;
-
- head_x = get_part(head)->x;
- head_y = get_part(head)->y;
- apple_x = apple_point.x;
- apple_y = apple_point.y;
+ int head_x = get_part(head)->x;
+ int head_y = get_part(head)->y;
+ int apple_x = apple_point.x;
+ int apple_y = apple_point.y;
+ int candy_x = candy_point.x;
+ int candy_y = candy_point.y;
 
 	 /* Check for collision APPLE and HEAD. */
  if (head_x == apple_x && head_y == apple_y){
@@ -67,12 +84,22 @@ void check_collision(){
 		get_cell(apple_x, apple_y)->state = EMPTY;
 		grow_snake();
     score = score + 50;
-    clear_screen();
+    clear_screen(); ///!!!!
     draw_score();
     draw_grid();
     draw_snake();
-    draw_walls();
  }
+
+ /* Check for collision CANDY and HEAD. */
+if (head_x == candy_x && head_y == candy_y){
+  remove_candy();
+  grow_snake();
+  score = score + 100;
+  clear_screen(); ///!!!!
+  draw_score();
+  draw_grid();
+  draw_snake();
+}
 
   /* Check for collision HEAD and BODY. */
   for (int i = 1; i != snake_length; i++){

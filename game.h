@@ -19,4 +19,7 @@ void pause_game(void);
 
 void check_collision(void);
 
+// TIME
+int gametime;
+
 #endif /* GAME_H_ */

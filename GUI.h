@@ -5,6 +5,12 @@
 #include "SDL/SDL_ttf.h"
 
 
+#define background 0
+#define wall 1
+#define snakepart 2
+#define apple 3
+#define candy 4
+
 /*
  * De hoogte en breedte (in pixels) van de afbeeldingen die getoond worden.
  * Als je andere afbeelding wil gebruiken in je GUI, zorg er dan voor dat deze
@@ -33,6 +39,8 @@ void draw_grid(void);
 void draw_snake(void);
 
 void draw_walls(void);
+
+void remove_candy_from_screen(void);
 
 // SCORE
 

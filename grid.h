@@ -11,7 +11,8 @@
 enum State {
 	EMPTY,
 	WALL,
-	APPLE
+	APPLE,
+	CANDY
 	//SNAKE
 };
 
@@ -32,6 +33,12 @@ struct Point{
 };
 
 struct Point apple_point;
+
+// CANDY
+
+struct Point candy_point;
+void initialize_candy(void);
+void remove_candy(void);
 
 
 

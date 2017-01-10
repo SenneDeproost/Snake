@@ -105,6 +105,52 @@ void place_apple_in_grid(){
 
 
 
+// CANDY
+
+void remove_candy(){
+	get_cell(candy_point.x, candy_point.y)->state == EMPTY;
+  remove_candy_from_screen();
+
+	candy_point.x = -1;
+	candy_point.y = -1;
+}
+
+
+void initialize_candy(){
+	generate_random_candy();
+	place_candy_in_grid();
+}
+
+void generate_random_candy(){
+	candy_point.x = rand() % GRID_WIDTH;
+	candy_point.y = rand() % GRID_HEIGHT;
+}
+
+void place_candy_in_grid(){
+	int x;
+	int y;
+	x = candy_point.x;
+	y = candy_point.y;
+
+// Controle of de candy niet in een muur komt.
+	if (get_cell(x, y)->state == WALL){
+		initialize_candy();
+	}
+
+// Controle of de candy niet in de slang verschijnt.
+		for(int i = 0; i =! snake_length; i++){
+		if (get_part(i)->x == x && get_part(i)->y == y){
+			initialize_candy();
+		}
+	}
+			get_cell(x, y)->state = CANDY;
+
+}
+
+
+
+
+
 
 
 
