@@ -82,7 +82,25 @@ void place_apple_in_grid(){
 	int y;
 	x = apple_point.x;
 	y = apple_point.y;
-	get_cell(x, y)->state = APPLE;
+
+// Controle of de appel niet in een muur komt.
+	if (get_cell(x, y)->state == WALL){
+		initialize_apple();
+	}
+
+// Controle of de appel niet in de slang verschijnt.
+		for(int i = 0; i =! snake_length; i++){
+		if (get_part(i)->x == x && get_part(i)->y == y){
+			initialize_apple();
+		}
+	}
+			get_cell(x, y)->state = APPLE;
+
+
+
+//	else{
+	//get_cell(x, y)->state = APPLE;
+//  }
 }
 
 
@@ -126,25 +144,30 @@ void initialize_walls(){
   place_walls_in_grid();
 }
 
+void place_wall(int n, int x, int y){
+
+get_wall(n)->x = x;
+get_wall(n)->y = y;
+get_cell(x, y)->state = WALL;
+
+}
+
 
 void place_walls_in_grid(){
+
 	for (int i = 0; i < 5; i++){
-		get_wall(i)->x = 0;
-		get_wall(i)->y = i;
+	place_wall(i, 0, i);
 	}
 
 	for (int i = 0 + 5; i < 5 + 5; i++){
-		get_wall(i)->x = 6;
-		get_wall(i)->y = i + 5;
+	place_wall(i, 6, i + 5);
 	}
 
 	for (int i = 0 + 10; i < 5 + 9; i++){
-		get_wall(i)->x = i + 2;
-		get_wall(i)->y = 8;
+	place_wall(i, i + 2, 8);
 }
 
-//get_wall(15)->x = 5;
-//get_wall(15)->y = 6;
+place_wall(2, 4, 4);
 
 
 }

@@ -12,6 +12,7 @@ enum State {
 	EMPTY,
 	WALL,
 	APPLE
+	//SNAKE
 };
 
 /*

@@ -137,6 +137,11 @@ void grow_snake(){
 	get_part(snake_length - 1)->part = BODY; /* Het laatste stuk van slang wordt body */
 	get_part(snake_length)->part = TAIL; /* Voeg een stuk toe die de nieuwe tail wordt van de slang.  */
 	snake_length = snake_length + 1;
+
+/*get_cell(
+	get_part(snake_length)->x
+	get_part(snake_length)->y
+)->state = SNAKE */
 }
 
 
@@ -162,6 +167,11 @@ void initialize_snake(int max_snake_length) {
   // Zet de direction initieel op right.
   get_part(0)->direction = RIGHT;
 //  get_part(1)->direction = RIGHT;
+
+// Zet de staat van de  grid cellen op SNAKE.
+/*  get_wall(a, b)->state = SNAKE;
+	get_wall(a - 1, b)->state = SNAKE */
+
 
 
 }
