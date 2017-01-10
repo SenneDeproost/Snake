@@ -4,7 +4,9 @@
   #include "GUI.h"
   #include "grid.h"
   #include "snake.h"
+  #include "highscores.h"
   #include "SDL/SDL.h"
+
 
   #define head 0
 
@@ -17,6 +19,10 @@
 
 
 void run_game(){
+
+  draw_score();
+
+  void gameloop(){
   //clear_screen();
   read_GUI_input();
   gametime++;
@@ -42,14 +48,14 @@ void run_game(){
     candytime = 0;
   }
 
-  draw_grid();
   draw_snake();
-
-  //test();
+  draw_grid();
 
 
   SDL_Delay(250);
-  run_game();
+  gameloop();
+}
+gameloop();
 }
 
 void pause_game(){
@@ -104,18 +110,23 @@ if (head_x == candy_x && head_y == candy_y){
   /* Check for collision HEAD and BODY. */
   for (int i = 1; i != snake_length; i++){
     if (head_x == get_part(i)->x && head_y == get_part(i)->y){
-      printf("%s\n","GAME OVER");
-      exit(0);
+      game_over();
     }
   }
 
   /* Check for collision HEAD and WALL */
   for (int i = 1; i < NR_OF_WALL_BLOCKS; i++){
     if (get_wall(i)->x == get_part(head)->x && get_wall(i)->y == get_part(head)->y){
-      printf("%s\n","GAME OVER");
-      exit(0);
+      game_over();
     }
   }
 
 
+}
+
+void game_over(){
+  clear_screen();
+  printf("%s\n","GAME OVER");
+  addToScoreboard(score);
+  exit(0);
 }

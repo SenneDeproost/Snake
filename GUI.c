@@ -4,6 +4,7 @@
 #include "game.h"
 #include "settings.h"
 #include "snake.h"
+#include "highscores.h"
 
 #include <stdio.h>
 
@@ -92,6 +93,7 @@ void draw_grid(){
 // Teken elementen.
 draw_walls();
 draw_apple();
+
 }
 
 void draw_snake(){
@@ -306,6 +308,7 @@ void initialize_figures() {
 	images[snakepart] = SDL_LoadBMP("Images/snake.bmp");
 	images[apple] = SDL_LoadBMP("Images/apple.bmp");
 	images[candy] = SDL_LoadBMP("Images/candy.bmp");
+	images[info_bar] = SDL_LoadBMP("Images/bar.bmp");
 }
 
 /*
@@ -376,9 +379,20 @@ char str[15];
 			       exit(1);
 			    }
 
+
+	 // Teken onderste balk van het scherm.
+	 draw_on_screen(
+	 	0,
+	 	window_HEIGHT - 40,
+	 	images[info_bar],
+	 	window
+	 );
+
+
 					draw_on_screen(window_WIDTH / 2, window_HEIGHT - 40, text, window);
-					SDL_Flip(window);
+
 }
+
 
 /*
  * Initialiseer de GUI. De functie krijgt de breedte en de hoogte van het speelveld mee als argumenten.

@@ -1,5 +1,5 @@
-OBJ=game.o grid.o main.o GUI.o snake.o
-HEADERS=game.h grid.h GUI.h main.h snake.h
+OBJ=game.o grid.o main.o GUI.o snake.o highscores.o
+HEADERS=game.h grid.h GUI.h main.h snake.h highscores.h
 CC=gcc
 TARGET=main
 
@@ -28,3 +28,7 @@ GUI.o: GUI.c $(HEADERS)
 snake.o: snake.c $(HEADERS)
 	@echo “Compiling snake.c”
 	$(CC) snake.c -c -o snake.o
+
+highscores.o: highscores.c $(HEADERS)
+	@echo “Compiling highscores.c”
+	$(CC) highscores.c -c -o highscores.o

@@ -10,6 +10,7 @@
 #define snakepart 2
 #define apple 3
 #define candy 4
+#define info_bar 5
 
 /*
  * De hoogte en breedte (in pixels) van de afbeeldingen die getoond worden.
@@ -41,6 +42,8 @@ void draw_snake(void);
 void draw_walls(void);
 
 void remove_candy_from_screen(void);
+
+void draw_rectangle(void);
 
 // SCORE
 
