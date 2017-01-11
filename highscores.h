@@ -8,6 +8,6 @@ typedef struct {
   int score;
 }Player;
 
-void addToScoreboard(int n);
+void addToScoreboard(int score);
 
 #endif /* HIGHSCORE_H_ */

@@ -1,36 +1,15 @@
-  #include "highscores.h"
-  #include "game.h"
+#include "highscores.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-  #define SIZE 10
+  #define SIZE 11
 
   // https://cboard.cprogramming.com/c-programming/135750-scoreboard-saved-txt-file.html
 
-  void addToScoreboard(int n)
-  {
-    /*  FILE *scoreboardFile = fopen("scoreboard.txt", "a");
-      char name[20];
-      Player player;
 
-      player.score = n;
-
-      printf("\n\nGeef naam: ");
-      scanf("%s", name);
-      strcpy(player.name, name);
-
-      fprintf(scoreboardFile, "%s %i\n",player.name, player.score);
-      fclose(scoreboardFile);
-
-      printf("Score: %i\n", score); */
-      readtest();
-
-  }
-
-
-void readtest(){
-  FILE *scoreboardFile = fopen("scoreboard.txt", "r+");
+void addToScoreboard(int score){
+  FILE *scoreboardFile = fopen("scoreboard.txt", "r");
 
   char name[50];
 
@@ -68,6 +47,7 @@ void readtest(){
   /* Voer naam in */
     printf("\n\nGeef naam: ");
     scanf("%s", name);
+    printf("\n\n");
 
 
 /* Lees scores */
@@ -75,7 +55,7 @@ void readtest(){
 //  rewind(scoreboardFile);
   //fscanf(scoreboardFile,"%s %i", name1, &score1);
   //printf("%s %i",name1, score1);
-  fscanf(scoreboardFile,"%s %i %s %i %s %i",
+  fscanf(scoreboardFile,"%s %i %s %i %s %i %s %i %s %i %s %i%s %i %s %i %s %i %s %i",
   name1, &score1,
   name2, &score2,
   name3, &score3,
@@ -89,7 +69,12 @@ void readtest(){
 );
 //printf("%s\n", name3);
 
+fclose(scoreboardFile);
+
+
   /* Sorteer scores */
+
+  FILE *fp = fopen("scoreboard.txt", "w+");
 
   Player p[SIZE]={
   {"A", 1},
@@ -101,17 +86,9 @@ void readtest(){
   {"G", 7},
   {"H", 8},
   {"I", 9},
-  {"J", 10}
-
-  //Player p[SIZE] = malloc(SIZE * sizeof(Player));
-//  {name, score}
-  };
-  printf("%s\n", "*" );
-  strncpy(p[1].name, name2, 50);
-  p[1].score = score2;
-  printf("%s\n", p[1].name);
-  printf("%i\n", p[1].score);
-  printf("%s\n", "*" );
+  {"J", 10},
+  {"NAME", 0}
+};
 
 strncpy(p[0].name, name1, 50);
 p[0].score = score1;
@@ -143,15 +120,8 @@ p[8].score = score9;
 strncpy(p[9].name, name10, 50);
 p[9].score = score10;
 
-//printf("//////////%s\n", score7);
-//printf("//////////%s\n", p[6].score);
-  Player p1[SIZE]={
-  {"Abbey",187},
-  {"Dane", 19},
-  {"Christene", 190}
-  /*{"Zack", 210},
-  {"Mary", 208}*/};
-
+strncpy(p[9].name, name, 50);
+p[9].score = score;
 
   int i, j;
   int temp;
@@ -170,17 +140,9 @@ p[9].score = score10;
       }
     }
   }
-/*printf("");
-printf("///");
-printf("%i\n", index[4]);
-printf("---");*/
-int g = index[1];
-printf("//");
-printf("%i\n", p[g].score);
-/*
-printf("///");*/
 
-  printf("%s %i %s %i %s %i",
+/* Kopieer waarden naar file. */
+  fprintf(fp, "%s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i",
   p[index[0]].name, p[index[0]].score,
   p[index[1]].name, p[index[1]].score,
   p[index[2]].name, p[index[2]].score,
@@ -193,6 +155,21 @@ printf("///");*/
   p[index[9]].name, p[index[9]].score
 );
 
-  fclose(scoreboardFile);
+/* Print scores af */
+printf("+-+- HIGHSCORES -+-+\n");
+printf("1: %s %i\n2: %s %i\n3: %s %i\n4: %s %i\n5: %s %i\n6: %s %i\n7: %s %i\n8: %s %i\n9: %s %i\n10: %s %i\n",
+p[index[0]].name, p[index[0]].score,
+p[index[1]].name, p[index[1]].score,
+p[index[2]].name, p[index[2]].score,
+p[index[3]].name, p[index[3]].score,
+p[index[4]].name, p[index[4]].score,
+p[index[5]].name, p[index[5]].score,
+p[index[6]].name, p[index[6]].score,
+p[index[7]].name, p[index[7]].score,
+p[index[8]].name, p[index[8]].score,
+p[index[9]].name, p[index[9]].score
+);
+
+  fclose(fp);
 
 }

@@ -1,1 +1,1 @@
-A 1 B 2 C 3 D 4 E 5 F 6 G 7 H 8 I 9 J 10
+Tim 50 Tom 34 Gert 90 Jos 44 Jan 135 Bart 60 Cyla 230 Lana 230 Sven 35 Thomas 90
