@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include "SDL/SDL.h"
 
-#include "grid.h"
-
 int score;
 
 void run_game(void);

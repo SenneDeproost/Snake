@@ -4,40 +4,34 @@
 #include "snake.h"
 
 
-/*
- * Stelt het twee-dimensionale veld voor. grid is een tweedimensionale array van pointers naar Cellen.
- * Jullie moeten deze variabele zelf niet gebruiken: in de plaats kan je gebruik maken van de functie get_cell hieronder.
- */
 static struct Cell*** grid;
 
-/*
- * Geeft een pointer terug naar de Cell die zich bevindt op positie (x,y) in het veld.
- * Let op: deze functie gaat ervan uit dat het coördinaat dat werd meegegeven correct is, en dus niet buiten
- * de grenzen van het veld valt.
- */
 struct Cell *get_cell(int x, int y) {
 	return grid[x][y];
 }
 
-
-
-/*
- * Stelt een positie voor: elke positie heeft een x- en een y-coordinaat.
- */
 struct Coordinate {
 	int x, y;
 };
 
 
 
+
+
+  ///////////////
+ //    GRID   //
+///////////////
+
+
 /*
 ALLOCATE GRID
 */
 
-struct Cell ***allocate_grid(int grid_width, int grid_height){
+// BRONNEN:
 // http://stackoverflow.com/questions/3275381/how-to-implement-a-2-dimensional-array-of-struct-in-c
 // http://stackoverflow.com/questions/26454022/storing-and-accessing-a-2d-array-in-a-struct
 
+struct Cell ***allocate_grid(int grid_width, int grid_height){
 struct Cell*** grid = (struct Cell***) malloc(sizeof(struct Cell**) * grid_width * grid_height);
 for(int i = 0; i < grid_width; i++) {
 	grid[i] = (struct Cell**) malloc(sizeof(struct Cell*) * grid_height);
@@ -65,7 +59,13 @@ void deallocate_grid(int grid_width, int grid_height){
 //free(grid);
 }
 
-// APPLE
+
+
+
+
+  ////////////////
+ //    APPLE   //
+////////////////
 
 void initialize_apple(){
 	generate_random_apple();
@@ -78,10 +78,8 @@ void generate_random_apple(){
 }
 
 void place_apple_in_grid(){
-	int x;
-	int y;
-	x = apple_point.x;
-	y = apple_point.y;
+	int x = apple_point.x;
+	int y = apple_point.y;
 
 // Controle of de appel niet in een muur komt.
 	if (get_cell(x, y)->state == WALL){
@@ -96,16 +94,15 @@ void place_apple_in_grid(){
 	}
 			get_cell(x, y)->state = APPLE;
 
-
-
-//	else{
-	//get_cell(x, y)->state = APPLE;
-//  }
 }
 
 
 
-// CANDY
+
+
+  ////////////////
+ //    CANDY   //
+////////////////
 
 void remove_candy(){
 	get_cell(candy_point.x, candy_point.y)->state == EMPTY;
@@ -151,10 +148,9 @@ void place_candy_in_grid(){
 
 
 
-
-
-
-// WALL
+  ///////////////
+ //    WALL   //
+///////////////
 
 static struct Wall_part** walls;
 
@@ -164,11 +160,11 @@ struct Wall_part *get_wall(int i) {
 	return walls[i];
 }
 
-struct Wall_part **allocate_wall(int nr_of_wall_blocks){
 // BRONNEN:
 // http://stackoverflow.com/questions/3275381/how-to-implement-a-2-dimensional-array-of-struct-in-c
 // http://stackoverflow.com/questions/26454022/storing-and-accessing-a-2d-array-in-a-struct
 
+struct Wall_part **allocate_wall(int nr_of_wall_blocks){
 struct Wall_part** walls = (struct Wall_part**) malloc(sizeof(struct Wall_part**) * nr_of_wall_blocks);
 for(int i = 0; i < nr_of_wall_blocks; i++) {
 	walls[i] = (struct Wall_part*) malloc(sizeof(struct Wall_part));
@@ -189,6 +185,9 @@ void initialize_walls(){
 	walls = allocate_wall(NR_OF_WALL_BLOCKS);
   place_walls_in_grid();
 }
+
+
+/* Voor het plaatsen van een muur op een bepaalde locatie. */
 
 void place_wall(int n, int x, int y){
 

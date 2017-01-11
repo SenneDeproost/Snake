@@ -1,4 +1,3 @@
-
   #include "game.h"
   #include "main.h"
   #include "GUI.h"
@@ -7,23 +6,24 @@
   #include "highscores.h"
   #include "SDL/SDL.h"
 
-
   #define head 0
 
   pause = 0; /* Zet pause initieel op 0. */
-  score = 0;
+  score = 0; /* Zet score initieel op 0. */
 
   gametime = 0;
   int candytime = 0;
 
 
+  ///////////////
+ //    LOOP   //
+///////////////
 
 void run_game(){
 
   draw_score();
 
   void gameloop(){
-  //clear_screen();
   read_GUI_input();
   gametime++;
   candytime++;
@@ -52,11 +52,15 @@ void run_game(){
   draw_grid();
 
 
-  SDL_Delay(250);
+  SDL_Delay(250); /* Als het spel sneller moet, deze waarde dan veranderen (in ms). */
   gameloop();
 }
 gameloop();
 }
+
+  ///////////////
+ //   PAUSE   //
+///////////////
 
 void pause_game(){
   pause == 1;
@@ -72,8 +76,9 @@ void pause_game(){
  run_game();
 }
 
-
-// COLLISION
+  ///////////////
+ // COLLISION //
+///////////////
 
 void check_collision(){
 
@@ -90,7 +95,6 @@ void check_collision(){
 		get_cell(apple_x, apple_y)->state = EMPTY;
 		grow_snake();
     score = score + 50;
-    clear_screen(); ///!!!!
     draw_score();
     draw_grid();
     draw_snake();
@@ -121,13 +125,17 @@ if (head_x == candy_x && head_y == candy_y){
 
 }
 
+  ///////////////
+ // GAME OVER //
+///////////////
+
 void game_over(){
   clear_screen();
   printf("%s\n","GAME OVER");
   printf("Score: %i\n", score);
   addToScoreboard(score);
-  //deallocate_wall();
-//  deallocate_snake();
-  //deallocate_grid();
+  deallocate_wall();
+  deallocate_snake();
+  deallocate_grid();
   exit(0);
 }

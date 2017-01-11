@@ -25,14 +25,10 @@ int main(int argc, char *argv[]) {
 		printf ("Ongeldig aantal parameters.\n");
 	}
 	else{
-		// http://stackoverflow.com/questions/12585398/how-to-pass-arguments-from-terminal-to-a-function
+		// BRON: http://stackoverflow.com/questions/12585398/how-to-pass-arguments-from-terminal-to-a-function
 			GRID_WIDTH = atoi(argv[1]);
 			GRID_HEIGHT = atoi(argv[2]);
 
-
-	/*
-	 * Naar deze statement hoef je nu niet te kijken.
-	 */
 	srand(time(NULL));
 
 

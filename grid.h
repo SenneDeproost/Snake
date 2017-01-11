@@ -42,7 +42,6 @@ void remove_candy(void);
 
 
 
-
 // WALL
 
 struct Wall_part *get_wall(int i);

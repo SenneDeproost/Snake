@@ -207,7 +207,10 @@ void read_GUI_input() {
 		switch (event.type) {
 		case SDL_QUIT:
 
-			exit(0);
+		deallocate_wall();
+		deallocate_snake();
+		deallocate_grid();
+		exit(0);
 
 		// Bediening van de slang met de pijltjestoetsen.
 		case SDL_KEYDOWN:
@@ -274,12 +277,12 @@ void read_GUI_input() {
 			}
 			break;
 
-		case SDL_MOUSEBUTTONDOWN:
+		/*case SDL_MOUSEBUTTONDOWN:
 			/*
 			 * De speler heeft met de muis geklikt: met de onderstaande lijn worden de coördinaten in het
 			 * het speelveld waar de speler geklikt heeft bewaard in de variabelen mouse_x en mouse_y.
 			 */
-			SDL_GetMouseState(&mouse_x, &mouse_y);
+			/*SDL_GetMouseState(&mouse_x, &mouse_y);
 
 			switch (event.button.button) {
 			case SDL_BUTTON_LEFT:
@@ -287,8 +290,8 @@ void read_GUI_input() {
 				break;
 			case SDL_BUTTON_RIGHT:
 
-				break;
-			}
+				break; */
+			//}
 
 		}
 	}
