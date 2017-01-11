@@ -5,6 +5,7 @@
 #include "settings.h"
 #include "snake.h"
 #include "highscores.h"
+#include "savegame.h"
 
 #include <stdio.h>
 
@@ -248,7 +249,7 @@ void read_GUI_input() {
 
 				/* Toetsen om andere spelfuncties aan te sturen */
 
-				/* RECHTS */
+				/* PAUSE */
 		  	case SDLK_p:
 				printf("pause\n");
 				if (pause == 0){
@@ -259,6 +260,16 @@ void read_GUI_input() {
 					pause = 0;
 				}
 		  		break;
+
+	  		/* LOAD */
+	  		case SDLK_l:
+	  		load_game();
+	  			break;
+
+				/* SAVE */
+				case SDLK_s:
+				save_game();
+					break;
 
 			}
 			break;

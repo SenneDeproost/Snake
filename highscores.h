@@ -1,5 +1,5 @@
-#ifndef HIGHSCORE_H_
-#define HIGHSCORE_H_
+#ifndef HIGHSCORES_H_
+#define HIGHSCORES_H_
 
 #include <stdio.h>
 
@@ -10,4 +10,4 @@ typedef struct {
 
 void addToScoreboard(int score);
 
-#endif /* HIGHSCORE_H_ */
+#endif /* HIGHSCORES_H_ */

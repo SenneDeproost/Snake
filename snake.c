@@ -47,7 +47,7 @@ void deallocate_snake(int max_snake_length){
 	for(int i = 0 ; i < max_snake_length; i++){
 		free(snake[i]);
 }
-free(snake);
+//free(snake);
 }
 
 /*
@@ -147,14 +147,14 @@ void grow_snake(){
 
 
 
-void initialize_snake(int max_snake_length) {
+void initialize_snake(int max_snake_length, int start_x, int start_y) {
 	snake = allocate_snake(max_snake_length);
 
   // Zet in het midden van het veld de kop van de slang.
   int a;
   int b;
-  a = GRID_WIDTH / 2;
-  b = GRID_HEIGHT / 2;
+  a = start_x;
+  b = start_y;
   get_part(0)->part = HEAD; // Eerste stuk van de slang is de head.
   get_part(1)->part = TAIL; // Tweede stuk van de slang is de tail.
 

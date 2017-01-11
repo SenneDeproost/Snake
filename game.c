@@ -101,10 +101,7 @@ if (head_x == candy_x && head_y == candy_y){
   remove_candy();
   grow_snake();
   score = score + 100;
-  clear_screen(); ///!!!!
   draw_score();
-  draw_grid();
-  draw_snake();
 }
 
   /* Check for collision HEAD and BODY. */
@@ -127,6 +124,10 @@ if (head_x == candy_x && head_y == candy_y){
 void game_over(){
   clear_screen();
   printf("%s\n","GAME OVER");
+  printf("Score: %i\n", score);
   addToScoreboard(score);
+  //deallocate_wall();
+//  deallocate_snake();
+  //deallocate_grid();
   exit(0);
 }
