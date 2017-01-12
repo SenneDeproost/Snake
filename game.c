@@ -27,7 +27,6 @@ void run_game(){
   read_GUI_input();
   gametime++;
   candytime++;
-  printf("%d\n", gametime );
 
   check_collision();
 

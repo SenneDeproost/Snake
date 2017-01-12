@@ -7,17 +7,10 @@
 int snake_length;
 snake_length = 2; // initieel is een slang een head en een tail, dus heeft lengte = 2.
 
-/*
- * Stelt het twee-dimensionale veld voor. grid is een tweedimensionale array van pointers naar Cellen.
- * Jullie moeten deze variabele zelf niet gebruiken: in de plaats kan je gebruik maken van de functie get_cell hieronder.
- */
+
 static struct Snake_part** snake;
 
-/*
- * Geeft een pointer terug naar de Cell die zich bevindt op positie (x,y) in het veld.
- * Let op: deze functie gaat ervan uit dat het coördinaat dat werd meegegeven correct is, en dus niet buiten
- * de grenzen van het veld valt.
- */
+
 struct Snake_part *get_part(int i) {
 	return snake[i];
 }
@@ -26,13 +19,13 @@ struct Snake_part *get_part(int i) {
 ALLOCATE SNAKE
 */
 
-struct Snake_part **allocate_snake(int snake_length){
+struct Snake_part **allocate_snake(){
 // BRONNEN:
 // http://stackoverflow.com/questions/3275381/how-to-implement-a-2-dimensional-array-of-struct-in-c
 // http://stackoverflow.com/questions/26454022/storing-and-accessing-a-2d-array-in-a-struct
 
-struct Snake_part** snake = (struct Snake_part**) malloc(sizeof(struct Snake_part**) * snake_length);
-for(int i = 0; i < snake_length; i++) {
+struct Snake_part** snake = (struct Snake_part**) malloc(sizeof(struct Snake_part**) * MAX_SNAKE_LENGTH);
+for(int i = 0; i < MAX_SNAKE_LENGTH; i++) {
 	snake[i] = (struct Snake_part*) malloc(sizeof(struct Snake_part));
 	}
  return snake;
@@ -42,9 +35,9 @@ for(int i = 0; i < snake_length; i++) {
 DEALLOCATE SNAKE
 */
 
-void deallocate_snake(int max_snake_length){
+void deallocate_snake(){
 
-	for(int i = 0 ; i < max_snake_length; i++){
+	for(int i = 0 ; i < MAX_SNAKE_LENGTH; i++){
 		free(snake[i]);
 }
 //free(snake);
@@ -76,7 +69,7 @@ for (int i = 0; i != snake_length; i++){
 				prev_x = get_part(i)->x;
 				prev_y = get_part(i)->y;
 
-    // Wanneer de kop zich binnen het veld bevind.
+    // Wanneer de kop zich binnen het veld bevindt.
 			if (get_part(i)->direction == UP){
 				get_part(i)->y--;
 			}
@@ -138,17 +131,13 @@ void grow_snake(){
 	get_part(snake_length)->part = TAIL; /* Voeg een stuk toe die de nieuwe tail wordt van de slang.  */
 	snake_length = snake_length + 1;
 
-/*get_cell(
-	get_part(snake_length)->x
-	get_part(snake_length)->y
-)->state = SNAKE */
 }
 
 
 
 
-void initialize_snake(int max_snake_length, int start_x, int start_y) {
-	snake = allocate_snake(max_snake_length);
+void initialize_snake(int start_x, int start_y) {
+	snake = allocate_snake();
 
   // Zet in het midden van het veld de kop van de slang.
   int a;
@@ -166,12 +155,5 @@ void initialize_snake(int max_snake_length, int start_x, int start_y) {
 
   // Zet de direction initieel op right.
   get_part(0)->direction = RIGHT;
-//  get_part(1)->direction = RIGHT;
-
-// Zet de staat van de  grid cellen op SNAKE.
-/*  get_wall(a, b)->state = SNAKE;
-	get_wall(a - 1, b)->state = SNAKE */
-
-
 
 }

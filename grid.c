@@ -96,6 +96,12 @@ void place_apple_in_grid(){
 
 }
 
+void remove_apple(){
+	get_cell(apple_point.x, apple_point.y)->state == EMPTY;
+  remove_from_screen(apple_point.x, apple_point.y);
+
+}
+
 
 
 
@@ -106,7 +112,7 @@ void place_apple_in_grid(){
 
 void remove_candy(){
 	get_cell(candy_point.x, candy_point.y)->state == EMPTY;
-  remove_candy_from_screen();
+  remove_from_screen(candy_point.x, candy_point.y);
 
 	candy_point.x = -1;
 	candy_point.y = -1;
@@ -164,18 +170,18 @@ struct Wall_part *get_wall(int i) {
 // http://stackoverflow.com/questions/3275381/how-to-implement-a-2-dimensional-array-of-struct-in-c
 // http://stackoverflow.com/questions/26454022/storing-and-accessing-a-2d-array-in-a-struct
 
-struct Wall_part **allocate_wall(int nr_of_wall_blocks){
-struct Wall_part** walls = (struct Wall_part**) malloc(sizeof(struct Wall_part**) * nr_of_wall_blocks);
-for(int i = 0; i < nr_of_wall_blocks; i++) {
+struct Wall_part **allocate_wall(){
+
+struct Wall_part** walls = (struct Wall_part**) malloc(sizeof(struct Wall_part**) * NR_OF_WALL_BLOCKS);
+for(int i = 0; i < NR_OF_WALL_BLOCKS; i++) {
 	walls[i] = (struct Wall_part*) malloc(sizeof(struct Wall_part));
 	}
  return walls;
 }
 
 
-void deallocate_wall(int nr_of_wall_blocks){
-
-	for(int i = 0 ; i < nr_of_wall_blocks; i++){
+void deallocate_wall(){
+	for(int i = 0 ; i < NR_OF_WALL_BLOCKS; i++){
 		free(walls[i]);
 }
 //free(walls);
@@ -197,6 +203,7 @@ get_cell(x, y)->state = WALL;
 
 }
 
+/* Hierbinnen nieuwe muren definiëren. */
 
 void place_walls_in_grid(){
 

@@ -5,11 +5,16 @@
 
   #define SIZE 11
 
-  // https://cboard.cprogramming.com/c-programming/135750-scoreboard-saved-txt-file.html
+  // BRON:  https://cboard.cprogramming.com/c-programming/135750-scoreboard-saved-txt-file.html
 
 
 void addToScoreboard(int score){
   FILE *scoreboardFile = fopen("scoreboard.txt", "r");
+
+  if (scoreboardFile == NULL){
+    printf("NO scoreboard.txt FILE EXISTS.\nPlease create a new one.\n");
+    exit (1);
+  }
 
   char name[50];
 
@@ -44,18 +49,10 @@ void addToScoreboard(int score){
   int score10;
 
 
-  /* Voer naam in */
-    printf("\n\nGeef naam: ");
-    scanf("%s", name);
-    printf("\n\n");
-
 
 /* Lees scores */
 
-//  rewind(scoreboardFile);
-  //fscanf(scoreboardFile,"%s %i", name1, &score1);
-  //printf("%s %i",name1, score1);
-  fscanf(scoreboardFile,"%s %i %s %i %s %i %s %i %s %i %s %i%s %i %s %i %s %i %s %i",
+  fscanf(scoreboardFile,"%s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i",
   name1, &score1,
   name2, &score2,
   name3, &score3,
@@ -67,14 +64,27 @@ void addToScoreboard(int score){
   name9, &score9,
   name10, &score10
 );
-//printf("%s\n", name3);
 
 fclose(scoreboardFile);
 
 
-  /* Sorteer scores */
+FILE *fp = fopen("scoreboard.txt", "w+");
 
-  FILE *fp = fopen("scoreboard.txt", "w+");
+
+/* Controle of er een highscore is behaald. */
+
+if (score >= score10){
+
+
+  /* Voer naam in */
+    printf("\n\nGeef naam: ");
+    scanf("%s", name);
+    printf("\n\n");
+
+
+  /* Sorteer scores.
+   *De onderste code is voor een dummy aan te maken die nadien opgevuld wordt met de
+   *echte code */
 
   Player p[SIZE]={
   {"A", 1},
@@ -89,6 +99,8 @@ fclose(scoreboardFile);
   {"J", 10},
   {"NAME", 0}
 };
+
+/* Kopieer data naar p */
 
 strncpy(p[0].name, name1, 50);
 p[0].score = score1;
@@ -122,6 +134,8 @@ p[9].score = score10;
 
 strncpy(p[9].name, name, 50);
 p[9].score = score;
+
+/* Sorteeralgoritme */
 
   int i, j;
   int temp;
@@ -169,6 +183,43 @@ p[index[7]].name, p[index[7]].score,
 p[index[8]].name, p[index[8]].score,
 p[index[9]].name, p[index[9]].score
 );
+}
+
+/* Wanneer er geen highscore is bereikt. */
+
+else{
+  /* Print scores af */
+printf("+-+- HIGHSCORES -+-+\n");
+printf("1: %s %i\n2: %s %i\n3: %s %i\n4: %s %i\n5: %s %i\n6: %s %i\n7: %s %i\n8: %s %i\n9: %s %i\n10: %s %i\n",
+name1, score1,
+name2, score2,
+name3, score3,
+name4, score4,
+name5, score5,
+name6, score6,
+name7, score7,
+name8, score8,
+name9, score9,
+name10, score10
+);
+
+/* Kopieer waarden naar file. */
+  fprintf(fp, "%s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i %s %i",
+  name1, score1,
+  name2, score2,
+  name3, score3,
+  name4, score4,
+  name5, score5,
+  name6, score6,
+  name7, score7,
+  name8, score8,
+  name9, score9,
+  name10, score10
+);
+
+
+
+}
 
   fclose(fp);
 

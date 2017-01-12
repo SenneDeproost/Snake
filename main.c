@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
 
 // INITIALIZATION
 	initialize_grid(GRID_WIDTH, GRID_HEIGHT);
-  initialize_snake(MAX_SNAKE_LENGTH, (GRID_WIDTH / 2), (GRID_HEIGHT / 2));
+  initialize_snake((GRID_WIDTH / 2), (GRID_HEIGHT / 2));
 	initialize_gui(GRID_WIDTH, GRID_HEIGHT);
 
 // RUN GAME LOGIC

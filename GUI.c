@@ -17,19 +17,12 @@ int last_tail_y = 0;
 int window_WIDTH;
 int window_HEIGHT;
 
+/* Variabelen voor SDL */
+
 TTF_Font *font;
 SDL_Surface *text;
 SDL_Color text_color = {255, 255, 255};
 
-
-/*
- *
- * Op het internet kan je verschillende tutorials voor SDL vinden.
- * Zie bv. http://www.parallelrealities.co.uk/2011/09/basic-game-tutorial-1-opening-window.html
- * Of http://lazyfoo.net/SDL_tutorials/
- * Of https://wiki.libsdl.org/FrontPage (bevat documentatie voor de verschillende functies
- * en types die gebruikt worden in SDL)
- */
 
 /*
  * Dit is het venster dat getoond zal worden en waarin het speelveld weergegeven wordt.
@@ -68,28 +61,7 @@ SDL_BlitSurface( source, NULL, destination, &offset );
 }
 
 
-
-
-
-
-
 void draw_grid(){
-
-// Teken de vakjes in de GUI.
-/*for (int i = 0; i <= (GRID_WIDTH - 1); i++){
-	for (int j = 0; j <= (GRID_HEIGHT - 1); j++){
-
-		// Als de cell een apple is.
-		if (get_cell(i, j)->state == APPLE){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[apple], window);
-		}
-
-		// Als de cell een candy is.
-		if (get_cell(i, j)->state == CANDY){
-			draw_on_screen(i * IMAGE_WIDTH, j * IMAGE_WIDTH, images[candy], window);
-		}
-
-	}*/
 
 // Teken elementen.
 draw_walls();
@@ -131,7 +103,6 @@ void remove_tail(){
 void draw_walls(){
 
 	for(int i = 0; i != NR_OF_WALL_BLOCKS; i++){
-//printf("%i %i\n",get_wall(i)->x, get_wall(i)->y );
 		draw_on_screen(
 			get_wall(i)->x * IMAGE_WIDTH,
 			get_wall(i)->y * IMAGE_HEIGHT,
@@ -167,20 +138,16 @@ void draw_candy(){
 
 }
 
-void remove_candy_from_screen(){
+void remove_from_screen(int x, int y){
 	draw_on_screen(
-	candy_point.x * IMAGE_WIDTH,
-	candy_point.y * IMAGE_HEIGHT,
+	x * IMAGE_WIDTH,
+	y * IMAGE_HEIGHT,
 	images[background],
 	window
 );
 }
 
 
-/*
- * Vangt de input uit de GUI op. Deze functie is al deels geïmplementeerd, maar je moet die zelf
- * nog afwerken. Je mag opnieuw alles aanpassen aan deze functie, inclusies return-type en argumenten.
- */
 void read_GUI_input() {
 
 	SDL_Event event;
@@ -192,17 +159,7 @@ void read_GUI_input() {
 	int a;
 	int b;
 
-	/*
-	 * Handelt alle input uit de GUI af.
-	 * Telkens de speler een input aan de GUI geeft (bv. een muisklik, muis bewegen, toets indrukken enz.)
-	 * wordt er een 'event' (van het type SDL_Event) gegenereerd dat hier wordt afgehandeld.
-	 *
-	 * Let wel op: niet al deze events zijn relevant voor jou: als de muis bv. gewoon wordt bewogen, hoef
-	 * je niet te reageren op dit event. Je zal dus (eventueel) een manier moeten vinden om alle niet-relevante
-	 * events weg te filteren.
-	 *
-	 * Zie ook https://wiki.libsdl.org/SDL_PollEvent en http://www.parallelrealities.co.uk/2011_09_01_archive.html
-	 */
+
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
@@ -220,7 +177,7 @@ void read_GUI_input() {
 
 			/* BOVEN */
 			case SDLK_UP:
-			printf("up\n");
+
 			if (get_part(0)->direction != DOWN){
 			get_part(0)->direction = UP;
 		  }
@@ -228,7 +185,7 @@ void read_GUI_input() {
 
 			/* ONDER */
 	  	case SDLK_DOWN:
-			printf("down\n");
+
 			if (get_part(0)->direction != UP){
 			get_part(0)->direction = DOWN;
 		  }
@@ -236,7 +193,7 @@ void read_GUI_input() {
 
 	  	/* LINKS */
   		case SDLK_LEFT:
-			printf("left\n");
+
 			if (get_part(0)->direction != RIGHT){
 			get_part(0)->direction = LEFT;
 		  }
@@ -244,7 +201,7 @@ void read_GUI_input() {
 
 	  	/* RECHTS */
 	  	case SDLK_RIGHT:
-			printf("right\n");
+
 			if (get_part(0)->direction != LEFT){
 			get_part(0)->direction = RIGHT;
 		  }
@@ -254,7 +211,7 @@ void read_GUI_input() {
 
 				/* PAUSE */
 		  	case SDLK_p:
-				printf("pause\n");
+
 				if (pause == 0){
 				pause = 1;
 				pause_game();
@@ -277,36 +234,11 @@ void read_GUI_input() {
 			}
 			break;
 
-		/*case SDL_MOUSEBUTTONDOWN:
-			/*
-			 * De speler heeft met de muis geklikt: met de onderstaande lijn worden de coördinaten in het
-			 * het speelveld waar de speler geklikt heeft bewaard in de variabelen mouse_x en mouse_y.
-			 */
-			/*SDL_GetMouseState(&mouse_x, &mouse_y);
-
-			switch (event.button.button) {
-			case SDL_BUTTON_LEFT:
-
-				break;
-			case SDL_BUTTON_RIGHT:
-
-				break; */
-			//}
 
 		}
 	}
 }
 
-/*
- * Met de code hieronder moet je niet echt rekening houden. Deze code hoef je enkel aan te passen
- * als je iets wil veranderen aan het initialiseren van de GUI.
- *
- * Let wel op, de functie initialize_gui moet aan de start van het programma zeker aangeroepen worden!
- *
- * De main-functie die helemaal onderaan gedefinieerd staat, moet je ook wel verwijderen. Deze functie
- * staat er enkel zodat je meteen kan controleren of de SDL library werkt op jouw computer, maar je
- * hebt deze functie niet nodig om je project te maken.
- */
 
 void stop_gui() {
 	SDL_Quit();
@@ -375,11 +307,8 @@ void initialize_window(char *title, int grid_width, int grid_height) {
 
 void draw_score(){
 char str[15];
-//int test =  sprintf(str, "%d", 5);
 
    sprintf(str, "%d", score);
-  // puts(str);
-
 
 	text = TTF_RenderText_Solid(font,
 					str,
@@ -402,8 +331,7 @@ char str[15];
 	 	window
 	 );
 
-
-					draw_on_screen(window_WIDTH / 2, window_HEIGHT - 40, text, window);
+draw_on_screen(window_WIDTH / 2, window_HEIGHT - 40, text, window);
 
 }
 

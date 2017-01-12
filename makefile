@@ -1,7 +1,7 @@
 OBJ=game.o grid.o main.o GUI.o snake.o highscores.o savegame.o
 HEADERS=game.h grid.h GUI.h main.h snake.h highscores.h savegame.h
 CC=gcc
-TARGET=main
+TARGET=snake
 
 # MAKEFILE #
 

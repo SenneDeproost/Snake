@@ -38,15 +38,10 @@ struct Snake_part {
 
 // Alloceer een array voor de slang.
 
-struct Snake_part **allocate_snake(int max_snake_length);
+struct Snake_part **allocate_snake();
 
 
-
-/*
- * Initialiseert het veld: maakt het veld aan, plaatst mijnen op random posities
- * en zorgt er voor dat de 'neighbouring_mines' waarde voor elk vakje juist staat.
- */
-void initialize_snake(int max_snake_length, int start_x, int start_y);
+void initialize_snake(int start_x, int start_y);
 
 /*
  * Geeft een pointer terug naar de Cell die zich bevindt op positie (x,y) in het veld.
